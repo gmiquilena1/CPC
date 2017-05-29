@@ -1,0 +1,23 @@
+<div class="animated fadeIn">
+  <div class="card card-accent-success">
+    <div class="card-header">
+      <i class="fa fa-upload"></i><strong>Carga Masiva</strong>
+    </div>
+    <div class="card-block">
+      <tabset>
+        <tab>
+          <ng-template tabHeading><i class="fa fa-money"></i> Conceptos de Gastos</ng-template>          
+          <app-carga-conceptos-gastos></app-carga-conceptos-gastos>
+        </tab>
+        <tab>
+          <ng-template tabHeading><i class="fa fa-clock-o"></i> Horas Centros de Costos</ng-template>
+          <app-carga-horas-ccostos></app-carga-horas-ccostos>
+        </tab>
+        <tab>
+          <ng-template tabHeading><i class="fa fa-shopping-cart"></i> Meterias Primas</ng-template>
+          <app-carga-materias-primas></app-carga-materias-primas>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

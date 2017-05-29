@@ -1,0 +1,203 @@
+<div class="animated fadeIn">
+  <div class="card card-accent-success">
+    <div class="card-header">
+      <i class="fa fa-edit"></i><strong>Nuevo</strong> Prducto
+    </div>
+    <div class="card-block">
+      <form name="form" autocomplete="off">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="tipo_producto">Tipo Producto</label>
+              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" [style]="{'width':'100%'}"
+                (onChange)="onChangeTipoProducto($event)"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="sub_tipo_producto">Sub Tipo Producto</label>
+              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="selectedSubTipoProd" [style]="{'width':'100%'}"
+              (onChange)="onChangeSubTipoProducto($event)"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="codigo">Codigo</label>
+              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <input pInputText type="text" style="width:100%" name="descripcion" placeholder="">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="unidad_medida">Unidad Medida</label>
+              <p-dropdown name="unidad_medida" [options]="unidades_medida" [(ngModel)]="selectedCity" [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <div class="row">
+          <div class="col-sm-3" *ngIf="!crear_ficha">
+            <div class="form-group">
+              <label for="costo_unitario" style="width:100%">Costo Unitario</label>
+              <p-spinner size="15" name="costo_unitario" [(ngModel)]="val3" [step]="0.5"></p-spinner>
+            </div>
+          </div>
+          <div class="col-sm-4" *ngIf="selectedTipoProd!=null && selectedTipoProd.producto_fabricado=='Si'">
+            <div class="form-group">
+              <label for="crear_ficha" style="width:100%">Crear Ficha de Producto</label>              
+              <label class="switch switch-3d switch-primary">
+                  <input type="checkbox" name="crear_ficha" [(ngModel)]="crear_ficha" class="switch-input">
+                  <span class="switch-label"></span>
+                  <span class="switch-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <p-panel header="Ficha de Producto" *ngIf="crear_ficha && selectedTipoProd!=null && selectedTipoProd.producto_fabricado=='Si'">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="proceso_fabricacion">Proceso de Fabricacion</label>
+                <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="selectedProceso" [style]="{'width':'100%'}"
+                (onChange)="onChangeProceso($event)"></p-dropdown>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="lote" style="width:100%">Lote</label>
+                <p-spinner size="15" name="lote" [(ngModel)]="val3" [step]="0.5"></p-spinner>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="costo_total">Costo Total</label>
+                <input pInputText type="text" [(ngModel)]="costo_total_producto" style="width:100%;opacity: initial;" name="costo_total" disabled>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="costo_unitario">Costo Unitario</label>
+                <input pInputText type="text" style="width:100%;opacity: initial;" name="costo_unitario" disabled>
+              </div>
+            </div>
+          </div>
+          <!--/.row-->
+          <div class="row">
+            <div class="col-md-12">
+              <tabset>
+                <tab>
+                  <ng-template tabHeading><i class="fa fa-shopping-cart"></i> Materiales</ng-template>
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="material" style="width:100%">Material</label>
+                        <input LockInput [(ngModel)]="newMaterial.nombre" pInputText type="text" style="width:100%" name="material"
+                         (click)="op1.toggle($event)" placeholder="Seleccione...">
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="duracion" style="width:100%">Cantidad</label>
+                        <p-spinner name="duracion" size="15" [(ngModel)]="newMaterial.cantidad" [step]="0.5"></p-spinner>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label for="ccosto">Centro de Costo Consumo</label>
+                        <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newMaterial.ccosto_consumo" [style]="{'width':'100%'}"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div style="padding-top: 25px;">
+                        <button type="button" (click)="agregarMaterial()" [disabled]="!newMaterial.ccosto_consumo" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
+                        <button type="button" (click)="eliminarMaterial()" [disabled]="!selectedMaterial" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--/.row-->
+                  <p-dataTable [value]="lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true"
+                    scrollHeight="250px">
+                    <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
+                    <p-column field="nombre" header="Nombre" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
+                    <p-column field="ccosto_consumo.nombre" header="C.Costo Consumo" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
+                    <p-column field="unidad_medida" header="Unidad Medida" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+                    <p-column field="cantidad" header="Cantidad" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
+                    <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'15%'}" styleClass='text-right'></p-column>
+                    <p-column field="costo_total" header="Costo Total" [style]="{'width':'15%'}" styleClass='text-right'></p-column>
+                    <p-footerColumnGroup>
+                      <p-row>
+                        <p-column footer="Total:" colspan="6" styleClass='text-left'></p-column>
+                        <p-column footer="{{costo_total_materiales}}" styleClass='text-right'></p-column>
+                      </p-row>
+                    </p-footerColumnGroup>
+                  </p-dataTable>
+                </tab>
+                <tab>
+                  <ng-template tabHeading><i class="fa fa-users"></i> Mano de Obra</ng-template>
+                  <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                    <!--<p-header>Singe Selection</p-header>-->
+                    <p-column field="nombre" header="Nombre"></p-column>
+                    <p-column field="descripcion" header="Descripcion"></p-column>
+                    <p-column field="duracion" header="Duracion - {{unidad}}" styleClass='text-right'></p-column>
+                    <p-column field="costo_unitario" header="Costo Unitario" styleClass='text-right'></p-column>
+                    <p-column field="costo_total" header="Costo Total" styleClass='text-right'></p-column>
+                    <p-footer>
+                      <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                    </p-footer>
+                  </p-treeTable>
+                </tab>
+                <tab>
+                  <ng-template tabHeading><i class="fa fa-gear"></i> Gastos de Fabrica</ng-template>
+                  <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                    <!--<p-header>Singe Selection</p-header>-->
+                    <p-column field="nombre" header="Nombre"></p-column>
+                    <p-column field="descripcion" header="Descripcion"></p-column>
+                    <p-column field="duracion" header="Duracion - {{unidad}}" styleClass='text-right'></p-column>
+                    <p-column field="costo_unitario" header="Costo Unitario" styleClass='text-right'></p-column>
+                    <p-column field="costo_total" header="Costo Total" styleClass='text-right'></p-column>
+                    <p-footer>
+                      <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                    </p-footer>
+                  </p-treeTable>
+                </tab>
+              </tabset>
+            </div>
+            <!--/.col-->
+          </div>
+          <!--/.row-->
+        </p-panel>
+      </form>
+    </div>
+    <!--/.card-block-->
+    <div class="card-footer">
+      <div style="text-align: right">
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <p-overlayPanel #op1 [showCloseIcon]="true" [dismissable]="true">
+    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input #gf type="text" pInputText size="50" placeholder="Filtro...">
+    </div>
+    <p-dataTable #dt [value]="materiales" selectionMode="single" dataKey="codigo" [globalFilter]="gf" scrollable="true" scrollHeight="200px"
+      scrollWidth="600px" (onRowSelect)="onSelectMaterial($event)">
+      <p-column field="codigo" header="Codigo" [style]="{'width':'20%'}" styleClass='text-left' [sortable]="true"></p-column>
+      <p-column field="nombre" header="Descripcion" [style]="{'width':'55%'}" styleClass='text-left' [sortable]="true"></p-column>
+      <p-column field="unidad_medida" header="Unidad" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+      <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'20%'}" styleClass='text-right'></p-column>
+    </p-dataTable>
+  </p-overlayPanel>
+
+</div>

@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+  <div class="card card-accent-success">
+    <div class="card-header">
+      <i class="fa fa-edit"></i><strong>Nuevo</strong> Centro de Costo
+    </div>
+    <div class="card-block">
+      <form name="form" autocomplete="off">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="codigo">Codigo</label>
+              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="codigo">Nombre</label>
+              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="tipo_producto">Tipo</label>
+              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="reporta" style="width:100%">Reporta Producción</label>
+              <label class="switch switch-3d switch-primary">
+                  <input type="checkbox" name="reporta" [(ngModel)]="reporta" class="switch-input">
+                  <span class="switch-label"></span>
+                  <span class="switch-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+      </form>
+
+      <div class="row" *ngIf="true">
+        <div class="col-md-12">
+          <tabset>
+            <tab>
+              <ng-template tabHeading><i class="fa fa-money"></i> Conceptos de Gastos</ng-template>
+              <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                <p-column field="nombre" header="Elemento de Costo / Codigo"></p-column>
+                <p-column field="descripcion" header="Descripcion"></p-column>
+                <p-column field="monto" header="Monto" styleClass='text-right'></p-column>
+                <p-footer>
+                  <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                </p-footer>
+              </p-treeTable>
+            </tab>
+            <tab>
+              <ng-template tabHeading><i class="fa fa-clock-o"></i> Horas</ng-template>
+              <p-dataTable [value]="lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true">
+                <p-column field="fecha" header="Fecha" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
+                <p-column field="elemento_costo" header="Elemento de Costo" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
+                <p-column field="cantidad_horas" header="Cantida de Horas" [style]="{'width':'15%'}" styleClass='text-right'></p-column>                
+              </p-dataTable>
+            </tab>
+          </tabset>
+        </div>
+        <!--/.col-->
+      </div>
+      <!--/.row-->
+    </div>
+    <!--/.card-block-->
+    <div class="card-footer">
+      <div style="text-align: right">
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

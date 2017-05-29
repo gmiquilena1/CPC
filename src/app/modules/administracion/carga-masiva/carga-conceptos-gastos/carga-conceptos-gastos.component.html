@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-sm-4">
+    <p-fileUpload name="demo[]" url="http://localhost/CPC/public/api/carga_masiva/upload?token=%22eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvQ1BDXC9wdWJsaWNcL2FwaVwvYXV0aGVudGljYXRlIiwiaWF0IjoxNDk2MDY0Nzk0LCJleHAiOjE0OTYwNjgzOTQsIm5iZiI6MTQ5NjA2NDc5NCwianRpIjoicWE5NnlEWXVMek11a3RLZSJ9.vzoQCYz--M1hCHKOckhAyuWqzPZipoXKMAx5Yg_jCD4%22"
+      (onUpload)="onUpload($event)" accept=".xlsx,.xls" (onBeforeUpload)="onBeforeUpload($event)" maxFileSize="1000000" chooseLabel="Archivo"
+      uploadLabel="Subir" cancelLabel="Cancelar">
+      <ng-template pTemplate="toolbar">
+        <br>
+        <br>
+        <div class="form-group">
+          <label for="hoja" style="width: 100%">Hoja</label>
+          <p-spinner size="10" name="hoja" [(ngModel)]="hoja" [step]="1"></p-spinner>
+        </div>
+        <div class="form-group">
+          <label for="hoja" style="width: 100%">Prefijo Mano de Obra</label>
+          <p-spinner size="10" name="hoja" [(ngModel)]="hoja" [step]="1"></p-spinner>
+        </div>
+        <div class="form-group">
+          <label for="hoja" style="width: 100%">Prefijo Gastos de Fabrica</label>
+          <p-spinner size="10" name="hoja" [(ngModel)]="hoja" [step]="1"></p-spinner>
+        </div>
+      </ng-template>
+      <ng-template pTemplate type="content">
+        <ul *ngIf="uploadedFiles.length">
+          <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+        </ul>
+      </ng-template>
+    </p-fileUpload>
+    <br>
+    <button class="btn btn-success" type="button"><i class="fa fa-check"></i>Confirmar Registros</button>
+    <div class="card card-inverse card-danger">
+      <div class="card-header">
+        <i class="fa fa-warning"></i> Alertas
+      </div>
+      <div class="card-block">
+      </div>
+    </div>
+  </div>
+  <!--./col-->
+  <div class="col-sm-8">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Concepto Gasto</th>
+          <th>Descripción</th>
+          <th>Codigo Centro de Costo</th>
+          <th>Monto Gasto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Vishnu Serghei</td>
+          <td>2012/01/01</td>
+          <td>Member</td>
+          <td>Member</td>
+          <td>Member</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Zbyněk Phoibos</td>
+          <td>2012/02/01</td>
+          <td>Staff</td>
+          <td>Member</td>
+          <td>Member</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Einar Randall</td>
+          <td>2012/02/01</td>
+          <td>Admin</td>
+          <td>Member</td>
+          <td>Member</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Félix Troels</td>
+          <td>2012/03/01</td>
+          <td>Member</td>
+          <td>Member</td>
+          <td>Member</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Aulus Agmundr</td>
+          <td>2012/01/21</td>
+          <td>Staff</td>
+          <td>Member</td>
+          <td>Member</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--./col-->
+</div>
+<!--./row -->

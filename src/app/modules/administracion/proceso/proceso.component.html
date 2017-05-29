@@ -1,0 +1,110 @@
+<div class="animated fadeIn">
+  <div class="card card-accent-success">
+    <div class="card-header">
+      <i class="fa fa-edit"></i><strong>Nuevo</strong> Proceso
+    </div>
+    <div class="card-block">
+      <form name="form" autocomplete="off">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="codigo">Codigo</label>
+              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input pInputText type="text" style="width:100%" name="nombre" placeholder="">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="tipo_producto">Tipo Producto</label>
+              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" 
+              [style]="{'width':'100%'}" (onChange)="onChangeTipoProducto($event)"></p-dropdown>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label for="sub_tipo_producto">Sub Tipo Producto</label>
+              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="selectedSubTipoProd"
+               [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <input pInputText type="text" style="width:100%" id="descripcion" placeholder="">
+            </div>
+          </div>
+        </div>
+        <!--/.row-->
+        <div class="row">
+          <div class="col-md-12">
+            <tabset>
+              <tab>
+                <ng-template tabHeading><i class="fa fa-sitemap"></i> Centros de Costos y Tareas</ng-template>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="ccosto">Centro de Costo</label>
+                      <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newTarea.ccosto" [style]="{'width':'100%'}"></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="tarea">Tarea</label>
+                      <input pInputText type="text" [(ngModel)]="newTarea.nombre" style="width:100%" name="tarea" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="descripcion">Descripcion</label>
+                      <input pInputText type="text" [(ngModel)]="newTarea.descripcion" style="width:100%" name="descripcion" placeholder="">
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="duracion">Duracion - Min</label>
+                      <p-spinner size="10" name="duracion" [(ngModel)]="newTarea.duracion" [step]="0.5"></p-spinner>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div style="padding-top: 25px;">
+                      <button type="button" (click)="agregarTarea()" [disabled]="!newTarea.ccosto || !newTarea.nombre || !newTarea.duracion" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
+                      <button type="button" (click)="eliminarTarea()" [disabled]="!selectedTarea" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <!--/.row-->
+                <p-treeTable [value]="arbol_tareas" selectionMode="single" [(selection)]="selectedTarea">
+                  <!--<p-header>Singe Selection</p-header>-->
+                  <p-column field="nombre" header="Nombre"></p-column>
+                  <p-column field="descripcion" header="Descripcion"></p-column>
+                  <p-column field="duracion" header="Duracion - {{unidad}}" styleClass='text-right'></p-column>
+                  <p-footer>
+                    <div style="text-align: right;"><strong>Total Duracion: {{total_duracion}} {{unidad}}</strong></div>
+                  </p-footer>
+                </p-treeTable>
+              </tab>
+            </tabset>
+          </div>
+          <!--/.col-->
+        </div>
+        <!--/.row-->
+
+      </form>
+    </div>
+    <!--/.card-block-->
+    <div class="card-footer">
+      <div style="text-align: right">
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
