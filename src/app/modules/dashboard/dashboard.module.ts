@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+
+//primeng
+import { MessagesModule,DropdownModule } from 'primeng/primeng';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing';
 
 @NgModule({
   imports: [
-    DashboardRoutingModule,
-    ChartsModule,
-    BsDropdownModule
+    FormsModule,
+    CommonModule,
+    DashboardRoutingModule,    
+    DropdownModule,
+    MessagesModule
   ],
   declarations: [ DashboardComponent ]
 })
