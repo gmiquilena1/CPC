@@ -29,6 +29,10 @@ export const routes: Routes = [
       {
         path: 'maestros',
         loadChildren: './modules/maestros/maestros.module#MaestrosModule'
+      },
+      {
+        path: 'config',
+        loadChildren: './modules/configuracion/configuracion.module#ConfiguracionModule'
       }
     ]
   },

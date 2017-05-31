@@ -74,8 +74,8 @@
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="fa fa-laptop"></i> Configuración</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">              
-              <a class="nav-link" routerLinkActive="active" ><i class="fa fa-building-o"></i> Empresa</a>
-              <a class="nav-link" routerLinkActive="active" ><i class="fa fa-users"></i> Usuarios</a>              
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/config/empresa']"><i class="fa fa-building-o"></i> Empresa</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/config/usuarios']"><i class="fa fa-users"></i> Usuarios</a>              
             </li>
           </ul>
         </li>
