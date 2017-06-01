@@ -5,7 +5,7 @@ import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS }
 import { Producto } from '../../../shared/interfaces/producto.interface';
 import { Material } from '../../../shared/interfaces/material.interface';
 import { CentroCosto } from '../../../shared/interfaces/centro_costo.interface';
-import { Utils } from '../../../shared/utils';
+import { Utils } from '../../../shared';
 
 @Component({
   selector: 'app-producto',

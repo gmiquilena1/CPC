@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PRODUCTOS } from '../../../shared/recursos';
+import { PRODUCTOS } from '../../../shared';
 
 @Component({
   selector: 'app-tabla-productos',

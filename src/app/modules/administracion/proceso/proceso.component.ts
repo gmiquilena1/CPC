@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { SelectItem, TreeNode } from 'primeng/primeng';
-import { CENTROS_COSTOS, TIPOS_PRODUCTOS } from '../../../shared/recursos';
+import { CENTROS_COSTOS, TIPOS_PRODUCTOS } from '../../../shared';
 
 @Component({
     selector: 'app-proceso',

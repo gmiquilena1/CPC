@@ -14,7 +14,7 @@ import {DataTableModule,SharedModule,CalendarModule,TreeTableModule,
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // Directives
-import { LockInputDirective } from '../../shared/lock-input.directive';
+import { LockInputDirective } from '../../shared';
 
 //Components
 import { ProcesoComponent } from './proceso/proceso.component';

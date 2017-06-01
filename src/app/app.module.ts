@@ -7,12 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NAV_DROPDOWN_DIRECTIVES } from './shared/nav-dropdown.directive';
+import { NAV_DROPDOWN_DIRECTIVES } from './shared';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared/sidebar.directive';
-import { AsideToggleDirective } from './shared/aside.directive';
-import { BreadcrumbsComponent } from './shared/breadcrumb.component';
+import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared';
+import { AsideToggleDirective } from './shared';
+import { BreadcrumbsComponent } from './shared';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';

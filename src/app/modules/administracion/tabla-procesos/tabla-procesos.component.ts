@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PROCESOS } from '../../../shared/recursos';
+import { PROCESOS } from '../../../shared';
 
 @Component({
   selector: 'app-tabla-procesos',

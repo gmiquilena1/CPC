@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CENTROS_COSTOS } from '../../../shared/recursos';
+import { CENTROS_COSTOS } from '../../../shared';
 
 @Component({
   selector: 'app-tabla-centros-costos',
