@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AuthGuard } from './shared';
+
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -43,7 +45,7 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
+  },AuthGuard],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

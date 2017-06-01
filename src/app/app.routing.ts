@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './shared';
 
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
@@ -9,11 +10,13 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full',
+    pathMatch: 'full',    
   },
   {
     path: '',
     component: FullLayoutComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     data: {
       title: 'Home'
     },
@@ -38,6 +41,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [AuthGuard],
     loadChildren: './modules/login/login.module#LoginModule'    
   }
 ];

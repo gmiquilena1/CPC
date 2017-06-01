@@ -15,7 +15,7 @@
                 <span class="input-group-addon"><i class="icon-lock"></i></span>
                 <input type="password" class="form-control" placeholder="Contraseña">
               </div>
-              <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary px-4 pull-right">Iniciar</button>
+              <button type="button" (click)="login()" class="btn btn-primary px-4 pull-right">Iniciar</button>
             </div>
           </div>
           <div class="card card-inverse card-primary py-5 d-md-down-none" style="width:44%">
