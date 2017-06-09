@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PRODUCTOS } from '../../../shared';
+import { Producto } from '../../../shared/interfaces';
+import { ProductosService } from '../../../services';
 
 @Component({
   selector: 'app-tabla-productos',
@@ -8,12 +9,17 @@ import { PRODUCTOS } from '../../../shared';
 })
 export class TablaProductosComponent implements OnInit {
 
-  productos:any[];
+  productos: Producto[];
 
-  constructor() { }
+  constructor(private productosService: ProductosService) { }
 
-  ngOnInit() {
-    this.productos = PRODUCTOS;
+  ngOnInit() {   
+
+    this.productosService.getProductos()
+      .subscribe(
+        (data) => this.productos = data,
+        (error) => console.log(error)
+      )
   }
 
 }

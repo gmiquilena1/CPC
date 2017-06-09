@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ServicesModule } from './services/services.module';
+
 import { AuthGuard } from './shared';
 
 import { AppComponent } from './app.component';
@@ -31,7 +33,8 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,    
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ServicesModule.forRoot()
   ],
   declarations: [
     AppComponent,

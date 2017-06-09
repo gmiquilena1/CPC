@@ -11,11 +11,11 @@
     </div>
   </div>
   <p-dataTable [value]="productos" selectionMode="single" [(selection)]="selected" dataKey="codigo" [rows]="12" [paginator]="true"
-    [globalFilter]="gb" [resizableColumns]="true">
+    [globalFilter]="gb" [resizableColumns]="true" emptyMessage="No hay datos para mostrar" [loading]="!productos">
     <!--<p-header>Lista de Procesos</p-header>-->
     <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
     <p-column field="nombre" header="Nombre" [style]="{'width':'60%'}" styleClass='text-left'></p-column>
-    <p-column field="unidad_medida" header="Unidad Medida" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+    <p-column field="unidad_medida.siglas" header="Unidad Medida" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
     <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'15%'}" styleClass='text-right'></p-column>    
   </p-dataTable>
 </div>
