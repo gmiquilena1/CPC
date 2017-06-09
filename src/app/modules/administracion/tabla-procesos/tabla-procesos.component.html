@@ -10,12 +10,12 @@
       <input #gb type="text" pInputText size="50" placeholder="Filtro...">
     </div>
   </div>
-  <p-dataTable [value]="procesos" selectionMode="single" [(selection)]="selected" dataKey="codigo" [rows]="12" [paginator]="true"
-    [globalFilter]="gb" #dt>    
+  <p-dataTable #dt [value]="procesos" selectionMode="single" [(selection)]="selected" dataKey="codigo" [rows]="12" [paginator]="true"
+    [globalFilter]="gb" emptyMessage="No hay datos para mostrar" [loading]="!procesos">    
     <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
     <p-column field="nombre" header="Nombre" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
-    <p-column field="tipo_producto" header="Tipo Producto" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
-    <p-column field="sub_tipo_producto" header="Sub Tipo Producto" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
+    <p-column field="sub_tipo_producto.tipo_producto.nombre" header="Tipo Producto" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
+    <p-column field="sub_tipo_producto.nombre" header="Sub Tipo Producto" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
     <p-column field="descripcion" header="Descripcion" [style]="{'width':'30%'}" styleClass='text-left'></p-column>    
   </p-dataTable>
 </div>

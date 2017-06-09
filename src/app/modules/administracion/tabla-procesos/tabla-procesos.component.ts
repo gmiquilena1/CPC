@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PROCESOS } from '../../../shared';
+import { Proceso } from '../../../shared/models';
+import { ProcesosService } from '../../../services';
 
 @Component({
   selector: 'app-tabla-procesos',
@@ -8,12 +9,16 @@ import { PROCESOS } from '../../../shared';
 })
 export class TablaProcesosComponent implements OnInit { 
 
-  procesos:any[];
+  procesos:Proceso[];
 
-  constructor() { }
+  constructor(private procesosService: ProcesosService) { }
 
   ngOnInit() {
-    this.procesos=PROCESOS;
+    this.procesosService.getProcesos()
+      .subscribe(
+        (data) => this.procesos = data,
+        (error) => console.log(error)
+      )
   }
   
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CENTROS_COSTOS } from '../../../shared';
+import { CentroCosto } from '../../../shared/models';
+import { CentrosCostosService } from '../../../services';
 
 @Component({
   selector: 'app-tabla-centros-costos',
@@ -8,12 +9,16 @@ import { CENTROS_COSTOS } from '../../../shared';
 })
 export class TablaCentrosCostosComponent implements OnInit {
 
-  centros_costos: any[];
+  centros_costos: CentroCosto[];
 
-  constructor() { }
+  constructor(private centrosCostosService: CentrosCostosService) { }
 
   ngOnInit() {
-    this.centros_costos = CENTROS_COSTOS;
+    this.centrosCostosService.getCcostos()
+      .subscribe(
+        (data) => this.centros_costos = data,
+        (error) => console.log(error)
+      );
   }
 
 }

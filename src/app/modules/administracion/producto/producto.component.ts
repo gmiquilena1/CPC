@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
 import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../shared';
-import { Producto } from '../../../shared/interfaces/producto.interface';
-import { Material } from '../../../shared/interfaces/material.interface';
-import { CentroCosto } from '../../../shared/interfaces/centro_costo.interface';
+import { Producto, Material, CentroCosto } from '../../../shared/models';
 import { Utils } from '../../../shared';
 
 @Component({

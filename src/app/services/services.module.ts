@@ -3,6 +3,8 @@ import { HttpModule } from '@angular/http';
 
 import { AuthService } from './auth.service';
 import { ProductosService } from './productos.service';
+import { CentrosCostosService } from './centros-costos.service';
+import { ProcesosService } from './procesos.service';
 
 
 @NgModule({
@@ -14,7 +16,12 @@ export class ServicesModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: ServicesModule,
-      providers: [AuthService,ProductosService]
+      providers: [
+        AuthService,
+        ProductosService,
+        CentrosCostosService,
+        ProcesosService,
+      ]
     };
   }
 }

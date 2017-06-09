@@ -10,11 +10,11 @@
       <input #gb type="text" pInputText size="50" placeholder="Filtro...">
     </div>
   </div>
-  <p-dataTable [value]="centros_costos" selectionMode="single" [(selection)]="selected" dataKey="codigo" [rows]="12" [paginator]="true"
-    [globalFilter]="gb" #dt>    
+  <p-dataTable #dt [value]="centros_costos" selectionMode="single" [(selection)]="selected" dataKey="codigo" [rows]="12" [paginator]="true"
+    [globalFilter]="gb" emptyMessage="No hay datos para mostrar" [loading]="!centros_costos">
     <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
     <p-column field="nombre" header="Nombre" [style]="{'width':'30%'}" styleClass='text-left'></p-column>
-    <p-column field="tipo" header="Tipo" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+    <p-column field="tipo_centro_costo.nombre" header="Tipo" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
     <p-column field="reporta" header="Reporta Produccion" [style]="{'width':'15%'}" styleClass='text-left'></p-column>    
   </p-dataTable>
 </div>
