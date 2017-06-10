@@ -9,7 +9,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="tipo_producto">Tipo Producto</label>
-              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" [style]="{'width':'100%'}"
+              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="producto.sub_tipo_producto.tipo_producto" [style]="{'width':'100%'}"
                 (onChange)="onChangeTipoProducto($event)"></p-dropdown>
             </div>
           </div>
@@ -23,7 +23,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="codigo">Codigo</label>
-              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+              <input pInputText type="text" style="width:100%" name="codigo" [(ngModel)]="producto.codigo" placeholder="">
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <div class="col-sm-8">
             <div class="form-group">
               <label for="descripcion">Descripcion</label>
-              <input pInputText type="text" style="width:100%" name="descripcion" placeholder="">
+              <input pInputText type="text" style="width:100%" name="descripcion" [(ngModel)]="producto.nombre" placeholder="">
             </div>
           </div>
           <div class="col-sm-4">
@@ -47,7 +47,7 @@
           <div class="col-sm-3" *ngIf="!crear_ficha">
             <div class="form-group">
               <label for="costo_unitario" style="width:100%">Costo Unitario</label>
-              <p-spinner size="15" name="costo_unitario" [(ngModel)]="val3" [step]="0.5"></p-spinner>
+              <p-spinner size="15" name="costo_unitario" [(ngModel)]="producto.costo_unitario" [step]="0.5"></p-spinner>
             </div>
           </div>
           <div class="col-sm-4" *ngIf="selectedTipoProd!=null && selectedTipoProd.producto_fabricado=='Si'">

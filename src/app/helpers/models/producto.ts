@@ -12,4 +12,8 @@ export class Producto {
     sub_tipo_producto?: SubTipoProducto;
     tiene_ficha?: boolean;
     producto_terminado?: boolean;
+
+    constructor(){
+        this.sub_tipo_producto = new SubTipoProducto;
+    }
 }

@@ -8,14 +8,18 @@ import { Producto } from '../helpers/models'
 @Injectable()
 export class ProductosService {
 
-  token: string;
+  constructor(private _http: Http) { }
 
-  constructor(private _http: Http) {
-    this.token = localStorage.getItem('cpc_token');
-   }
+  listAll():Observable<Producto[]>{
+    let token = localStorage.getItem('cpc_token');
+    return this._http.get('api/productos?token='+token)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)    
+  }
 
-  getProductos():Observable<Producto[]>{
-    return this._http.get('api/productos?token='+this.token)
+  buscar(id:number):Observable<Producto>{
+    let token = localStorage.getItem('cpc_token');
+    return this._http.get('api/productos/buscar/'+id+'?token='+token)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }

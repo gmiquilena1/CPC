@@ -39,6 +39,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'detalle-producto/:id',
+        component: ProductoComponent,
+        data: {
+          title: 'Detalle de Producto'
+        }
+      },
+      {
         path: 'tabla-productos',
         component: TablaProductosComponent,
         data: {

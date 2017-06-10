@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
 import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../helpers';
 import { Producto, Material, CentroCosto } from '../../../helpers/models';
 import { Utils } from '../../../helpers';
+import { ProductosService } from '../../../services';
 
 @Component({
   selector: 'app-producto',
@@ -21,6 +23,8 @@ export class ProductoComponent implements OnInit {
   @ViewChild('dtMat')
   dtMat: DataTable;
 
+  producto: Producto = new Producto();
+
   lista_tipo_producto: SelectItem[];
   lista_sub_tipo_producto: SelectItem[];
 
@@ -34,7 +38,7 @@ export class ProductoComponent implements OnInit {
   lista_procesos: SelectItem[];
 
   unidad: string = "Min";
-  crear_ficha:boolean = false;
+  crear_ficha: boolean = false;
 
   lista_materiales: Material[];
   selectedMaterial: Material;
@@ -51,13 +55,25 @@ export class ProductoComponent implements OnInit {
   costo_total_materiales: number = 0;
   costo_total_producto: number = 0;
 
-  constructor(private _location: Location) { }
+  constructor(private _location: Location,
+    private route: ActivatedRoute,
+    private productoService:ProductosService) { }
 
   ngOnInit() {
     this.materiales = PRODUCTOS;
     this.loadListaTipoProductos();
-    this.loadUnidadesMedida();    
+    this.loadUnidadesMedida();
     this.lista_materiales = [];
+
+    this.route.params.subscribe(params => {
+      let id = +params['id'];
+      this.productoService.buscar(id)
+      .subscribe(
+        (data) => this.producto = data,
+        (error) => console.log(error)
+      );
+    });
+
   }
 
   loadListaTipoProductos() {
@@ -80,23 +96,23 @@ export class ProductoComponent implements OnInit {
   }
 
   onChangeTipoProducto(event) {
-    this.selectedSubTipoProd=null;
+    this.selectedSubTipoProd = null;
     this.loadListaSubTipoProductos(event.value.sub_tipo_producto);
-    if(event.value.producto_fabricado=="No")
-      this.crear_ficha=false;    
+    if (event.value.producto_fabricado == "No")
+      this.crear_ficha = false;
   }
 
-  onChangeSubTipoProducto(event) {    
+  onChangeSubTipoProducto(event) {
     this.loadListaProcesos(event.value.id);
   }
 
   loadListaProcesos(stp_id) {
-    let precesos = PROCESOS.filter((val)=>val.sub_tipo_producto_id==stp_id);
+    let precesos = PROCESOS.filter((val) => val.sub_tipo_producto_id == stp_id);
 
     this.lista_procesos = [];
     this.lista_procesos.push({ label: '', value: null });
     for (var preoceso of precesos) {
-      this.lista_procesos.push({ label: preoceso.codigo+" - "+preoceso.nombre, value: preoceso });
+      this.lista_procesos.push({ label: preoceso.codigo + " - " + preoceso.nombre, value: preoceso });
     }
   }
 
@@ -105,7 +121,7 @@ export class ProductoComponent implements OnInit {
     this.calcularCostos();
   }
 
-  loadListaCcostos(lista) {   
+  loadListaCcostos(lista) {
 
     this.lista_ccostos = [];
     this.lista_ccostos.push({ label: '', value: null });
@@ -182,8 +198,8 @@ export class ProductoComponent implements OnInit {
     this._location.back();
   }
 
-  calcularCostos(){
-    this.costo_total_producto=this.selectedProceso.costos.costo_mo+this.selectedProceso.costos.costo_gf+this.costo_total_materiales;
+  calcularCostos() {
+    this.costo_total_producto = this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales;
   }
 
 }

@@ -8,14 +8,11 @@ import { Proceso } from '../helpers/models'
 @Injectable()
 export class ProcesosService {
 
-  token: string;
-
-  constructor(private _http: Http) {
-    this.token = localStorage.getItem('cpc_token');
-   }
+  constructor(private _http: Http) { }
 
   getProcesos():Observable<Proceso[]>{
-    return this._http.get('api/procesos?token='+this.token)
+    let token = localStorage.getItem('cpc_token');
+    return this._http.get('api/procesos?token='+token)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
