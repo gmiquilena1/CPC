@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CentroCosto } from '../../../shared/models';
+import { CentroCosto } from '../../../helpers/models';
 import { CentrosCostosService } from '../../../services';
 
 @Component({

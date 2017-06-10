@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Proceso } from '../../../shared/models';
+import { Proceso } from '../../../helpers/models';
 import { ProcesosService } from '../../../services';
 
 @Component({

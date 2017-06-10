@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
-import { HttpResponse } from './http-response';
-import { Proceso } from '../shared/models'
+import { HttpResponseHandlers } from '../helpers/http';
+import { Proceso } from '../helpers/models'
 
 @Injectable()
 export class ProcesosService {
@@ -15,9 +15,9 @@ export class ProcesosService {
    }
 
   getProcesos():Observable<Proceso[]>{
-    return this._http.get('http://localhost/CPC2/public/api/procesos?token='+this.token)
-    .map(HttpResponse.extractData)
-    .catch(HttpResponse.handleError)    
+    return this._http.get('api/procesos?token='+this.token)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)    
   }
 
 }

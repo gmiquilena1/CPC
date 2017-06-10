@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
-import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../shared';
-import { Producto, Material, CentroCosto } from '../../../shared/models';
-import { Utils } from '../../../shared';
+import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../helpers';
+import { Producto, Material, CentroCosto } from '../../../helpers/models';
+import { Utils } from '../../../helpers';
 
 @Component({
   selector: 'app-producto',

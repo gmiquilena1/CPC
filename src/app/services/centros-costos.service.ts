@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
-import { HttpResponse } from './http-response';
-import { CentroCosto } from '../shared/models'
+import { HttpResponseHandlers } from '../helpers/http';
+import { CentroCosto } from '../helpers/models'
 
 @Injectable()
 export class CentrosCostosService {
@@ -15,9 +15,9 @@ export class CentrosCostosService {
    }
 
   getCcostos():Observable<CentroCosto[]>{
-    return this._http.get('http://localhost/CPC2/public/api/ccosto?token='+this.token)
-    .map(HttpResponse.extractData)
-    .catch(HttpResponse.handleError)    
+    return this._http.get('api/ccosto?token='+this.token)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)    
   }
   
 

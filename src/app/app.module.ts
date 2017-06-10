@@ -3,20 +3,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
+import { Router } from '@angular/router';
 
 import { ServicesModule } from './services/services.module';
 
-import { AuthGuard } from './shared';
+import { AuthGuard } from './helpers';
 
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NAV_DROPDOWN_DIRECTIVES } from './shared';
+import { NAV_DROPDOWN_DIRECTIVES } from './helpers';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { SIDEBAR_TOGGLE_DIRECTIVES } from './shared';
-import { AsideToggleDirective } from './shared';
-import { BreadcrumbsComponent } from './shared';
+import { SIDEBAR_TOGGLE_DIRECTIVES } from './helpers';
+import { AsideToggleDirective } from './helpers';
+import { BreadcrumbsComponent } from './helpers';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -25,6 +27,8 @@ import { AppRoutingModule } from './app.routing';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
+import { HttpFactory } from "./helpers/http";
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -32,7 +36,7 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule,    
+    ChartsModule,
     BrowserAnimationsModule,
     ServicesModule.forRoot()
   ],
@@ -48,7 +52,12 @@ import { SimpleLayoutComponent } from './layouts/simple-layout.component';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },AuthGuard],
-  bootstrap: [ AppComponent ]
+  }, AuthGuard,
+  {
+    provide: Http,
+    useFactory: HttpFactory,
+    deps: [XHRBackend, RequestOptions, Router]
+  }],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

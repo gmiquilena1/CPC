@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
-import { HttpResponse } from './http-response';
+import { HttpResponseHandlers } from '../helpers/http';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private _http: Http) { }
 
   login(credenciales: any): Observable<any> {
-    return this._http.post('http://localhost/CPC2/public/api/authenticate', credenciales)
+    return this._http.post('api/authenticate', credenciales)
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;
@@ -30,7 +30,7 @@ export class AuthService {
           return false;
         }
       })
-      .catch(HttpResponse.handleError);
+      .catch(HttpResponseHandlers.handleError);
   }
 
   logout(): void {

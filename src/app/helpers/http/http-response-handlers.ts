@@ -1,7 +1,7 @@
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
-export class HttpResponse {
+export class HttpResponseHandlers {
 
     static extractData(res: Response){
         let body = res.json();        

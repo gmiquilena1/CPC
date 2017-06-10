@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './shared';
+import { AuthGuard } from './helpers';
 
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
