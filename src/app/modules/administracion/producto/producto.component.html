@@ -1,4 +1,5 @@
 <div class="animated fadeIn">
+  {{producto}}
   <div class="card card-accent-success">
     <div class="card-header">
       <i class="fa fa-edit"></i><strong>Nuevo</strong> Prducto
@@ -38,23 +39,23 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="unidad_medida">Unidad Medida</label>
-              <p-dropdown name="unidad_medida" [options]="unidades_medida" [(ngModel)]="selectedCity" [style]="{'width':'100%'}"></p-dropdown>
+              <p-dropdown name="unidad_medida" [options]="unidades_medida" [(ngModel)]="producto.unidad_medida" [style]="{'width':'100%'}"></p-dropdown>
             </div>
           </div>
         </div>
         <!--/.row-->
         <div class="row">
-          <div class="col-sm-3" *ngIf="!crear_ficha">
+          <div class="col-sm-3" *ngIf="!producto.tiene_ficha">
             <div class="form-group">
               <label for="costo_unitario" style="width:100%">Costo Unitario</label>
               <p-spinner size="15" name="costo_unitario" [(ngModel)]="producto.costo_unitario" [step]="0.5"></p-spinner>
             </div>
           </div>
-          <div class="col-sm-4" *ngIf="selectedTipoProd!=null && selectedTipoProd.producto_fabricado=='Si'">
+          <div class="col-sm-4" *ngIf="producto.sub_tipo_producto.tipo_producto!=null && producto.sub_tipo_producto.tipo_producto.producto_fabricado">
             <div class="form-group">
-              <label for="crear_ficha" style="width:100%">Crear Ficha de Producto</label>              
+              <label for="tiene_ficha" style="width:100%">Crear Ficha de Producto</label>              
               <label class="switch switch-3d switch-primary">
-                  <input type="checkbox" name="crear_ficha" [(ngModel)]="crear_ficha" class="switch-input">
+                  <input type="checkbox" name="tiene_ficha" [(ngModel)]="producto.tiene_ficha" class="switch-input">
                   <span class="switch-label"></span>
                   <span class="switch-handle"></span>
               </label>
@@ -62,19 +63,19 @@
           </div>
         </div>
         <!--/.row-->
-        <p-panel header="Ficha de Producto" *ngIf="crear_ficha && selectedTipoProd!=null && selectedTipoProd.producto_fabricado=='Si'">
+        <p-panel header="Ficha de Producto" *ngIf="producto.tiene_ficha && producto.sub_tipo_producto.tipo_producto!=null && producto.sub_tipo_producto.tipo_producto.producto_fabricado">
           <div class="row">
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="proceso_fabricacion">Proceso de Fabricacion</label>
-                <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="selectedProceso" [style]="{'width':'100%'}"
+                <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="producto.ficha_producto.proceso" [style]="{'width':'100%'}"
                 (onChange)="onChangeProceso($event)"></p-dropdown>
               </div>
             </div>
             <div class="col-sm-2">
               <div class="form-group">
                 <label for="lote" style="width:100%">Lote</label>
-                <p-spinner size="15" name="lote" [(ngModel)]="val3" [step]="0.5"></p-spinner>
+                <p-spinner size="15" name="lote" [(ngModel)]="producto.ficha_producto.lote" [step]="0.5"></p-spinner>
               </div>
             </div>
             <div class="col-sm-3">
@@ -124,12 +125,12 @@
                     </div>
                   </div>
                   <!--/.row-->
-                  <p-dataTable [value]="lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true"
+                  <p-dataTable [value]="producto.ficha_producto.lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true"
                     scrollHeight="250px">
                     <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
                     <p-column field="nombre" header="Nombre" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
                     <p-column field="ccosto_consumo.nombre" header="C.Costo Consumo" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
-                    <p-column field="unidad_medida" header="Unidad Medida" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+                    <p-column field="unidad_medida.siglas" header="Unidad Medida" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
                     <p-column field="cantidad" header="Cantidad" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
                     <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'15%'}" styleClass='text-right'></p-column>
                     <p-column field="costo_total" header="Costo Total" [style]="{'width':'15%'}" styleClass='text-right'></p-column>

@@ -1,16 +1,24 @@
 export const UNIDADES_MEDIDA = [
     {
+        id:1,
         nombre: "KILOGRAMOS",
         siglas: "KG"
     },
     {
-        nombre: "METROS",
-        siglas: "MTS"
-    },
+        id:2,
+        nombre: "LITROS",
+        siglas: "LTS"
+    },    
     {
+        id:3,
         nombre: "PIEZAS",
         siglas: "PZA"
     },
+    {
+        id:4,
+        nombre: "METROS",
+        siglas: "MTS"
+    }
 ]
 
 export const PRODUCTOS = [

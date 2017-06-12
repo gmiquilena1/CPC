@@ -5,5 +5,5 @@ export class FichaProducto {
     id?: number;
     proceso?: Proceso;    
     lote?: number;
-    materiales?: Material[];
+    lista_materiales?: Material[];
 }

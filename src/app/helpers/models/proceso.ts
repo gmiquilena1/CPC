@@ -8,6 +8,10 @@ export class Proceso {
     descripcion?: string;
     sub_tipo_producto?: SubTipoProducto;
     centros_costos?: CentroCosto[];
+    costos:{
+        costo_mo:number,
+        costo_gf:number
+    }
     ruta?: [
         {
             data?: {
