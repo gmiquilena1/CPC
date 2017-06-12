@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
 import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../helpers';
-import { Producto, Material, CentroCosto } from '../../../helpers/models';
+import { Producto, Material, CentroCosto, TipoProducto, SubTipoProducto } from '../../../helpers/models';
 import { Utils } from '../../../helpers';
 import { ProductosService } from '../../../services';
 
@@ -24,6 +24,7 @@ export class ProductoComponent implements OnInit {
   dtMat: DataTable;
 
   producto: Producto = new Producto();
+  id_producto: number;
 
   lista_tipo_producto: SelectItem[];
   lista_sub_tipo_producto: SelectItem[];
@@ -57,7 +58,7 @@ export class ProductoComponent implements OnInit {
 
   constructor(private _location: Location,
     private route: ActivatedRoute,
-    private productoService:ProductosService) { }
+    private productoService: ProductosService) { }
 
   ngOnInit() {
     this.materiales = PRODUCTOS;
@@ -67,13 +68,16 @@ export class ProductoComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       let id = +params['id'];
-      this.productoService.buscar(id)
-      .subscribe(
-        (data) => this.producto = data,
-        (error) => console.log(error)
-      );
+      if (id) {
+        this.productoService.buscar(id)
+          .subscribe(
+          (data) => {
+            this.producto = data;
+          },
+          (error) => console.log(error)
+          );
+      }
     });
-
   }
 
   loadListaTipoProductos() {
@@ -81,6 +85,7 @@ export class ProductoComponent implements OnInit {
 
     this.lista_tipo_producto = [];
     this.lista_tipo_producto.push({ label: '', value: null });
+
     for (var item of lista) {
       this.lista_tipo_producto.push({ label: item.codigo + " - " + item.nombre, value: item });
     }
