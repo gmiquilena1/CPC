@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
-import { TIPOS_PRODUCTOS, PRODUCTOS, CENTROS_COSTOS, UNIDADES_MEDIDA, PROCESOS } from '../../../helpers';
-import { Producto, Proceso, Material, CentroCosto, TipoProducto, SubTipoProducto } from '../../../helpers/models';
+import { DataFormProducto, Producto, Proceso, Material, CentroCosto, TipoProducto, SubTipoProducto } from '../../../helpers/models';
 import { Utils } from '../../../helpers';
 import { ProductosService, ProcesosService } from '../../../services';
 
@@ -22,6 +21,8 @@ export class ProductoComponent implements OnInit {
 
   @ViewChild('dtMat')
   dtMat: DataTable;
+
+  dataForm: DataFormProducto;
 
   producto: Producto = new Producto();
   id_producto: number;
@@ -55,12 +56,13 @@ export class ProductoComponent implements OnInit {
     private procesosService: ProcesosService) { }
 
   ngOnInit() {
-    this.materiales = PRODUCTOS;
+    
     this.lista_materiales = [];
 
-    this.procesosService.getProcesos().subscribe(
+    this.productoService.dataForm().subscribe(
       (data) => {
-        this.procesos = data;
+        this.dataForm = data;
+        this.materiales = this.dataForm.materiales;
         this.route.params.subscribe(params => {
           let id = +params['id'];
           if (id) {
@@ -70,11 +72,13 @@ export class ProductoComponent implements OnInit {
                 this.producto = data;
                 this.loadListaTipoProductosDetalle();
                 this.loadUnidadesMedidaDetalle();
-                this.loadListaProcesosDetalle(this.producto.sub_tipo_producto.id,this.producto.ficha_producto.proceso.id);
-                for (var item of this.producto.ficha_producto.lista_materiales) {
-                  this.costo_total_materiales += item.costo_total;
+                if(this.producto.tiene_ficha){
+                  this.loadListaProcesosDetalle(this.producto.sub_tipo_producto.id,this.producto.ficha_producto.proceso.id);
+                  for (var item of this.producto.ficha_producto.lista_materiales) {
+                    this.costo_total_materiales += item.costo_total;
+                  }
+                  Utils.round(this.costo_total_materiales,2);
                 }
-                Utils.round(this.costo_total_materiales,2);
                 this.costo_total_producto = this.producto.costo_unitario;
               },
               (error) => console.log(error)
@@ -91,7 +95,7 @@ export class ProductoComponent implements OnInit {
   }
 
   loadListaTipoProductosDetalle() {
-    let lista = TIPOS_PRODUCTOS;
+    let lista = this.dataForm.tipos_producto;
 
     this.lista_tipo_producto.push({ label: this.producto.sub_tipo_producto.tipo_producto.codigo + " - " + this.producto.sub_tipo_producto.tipo_producto.nombre, value: this.producto.sub_tipo_producto.tipo_producto });
 
@@ -101,7 +105,7 @@ export class ProductoComponent implements OnInit {
       this.lista_tipo_producto.push({ label: item.codigo + " - " + item.nombre, value: item });
     }
 
-    let tipo = TIPOS_PRODUCTOS.find((val) => val.id == this.producto.sub_tipo_producto.tipo_producto.id);
+    let tipo = this.dataForm.tipos_producto.find((val) => val.id == this.producto.sub_tipo_producto.tipo_producto.id);
 
     this.loadListaSubTipoProductosDetalle(tipo.sub_tipo_producto);
 
@@ -121,7 +125,7 @@ export class ProductoComponent implements OnInit {
   }
 
   loadUnidadesMedidaDetalle() {
-    let unidades = UNIDADES_MEDIDA;
+    let unidades = this.dataForm.unidades_medida;
     this.unidades_medida = [];
     this.unidades_medida.push({ label: this.producto.unidad_medida.nombre, value: this.producto.unidad_medida });
 
@@ -133,17 +137,17 @@ export class ProductoComponent implements OnInit {
   }
 
   loadListaProcesosDetalle(stp_id,proceso_id) {
-    let procesos = this.procesos.filter((val) => val.sub_tipo_producto.id == stp_id);
-    let proceso = this.procesos.find((val)=>val.id==proceso_id)
+    let procesos = this.dataForm.procesos.filter((val) => val.sub_tipo_producto.id == stp_id);
+    this.selectedProceso = this.dataForm.procesos.find((val)=>val.id==proceso_id)
     procesos = procesos.filter((val)=>val.id!=proceso_id);
 
     this.lista_procesos = [];
-    this.lista_procesos.push({ label: proceso.codigo + " - " + proceso.nombre, value: proceso });
+    this.lista_procesos.push({ label: this.selectedProceso.codigo + " - " + this.selectedProceso.nombre, value: this.selectedProceso });
     for (var preoceso of procesos) {
       this.lista_procesos.push({ label: preoceso.codigo + " - " + preoceso.nombre, value: preoceso });
     }
 
-    this.loadListaCcostosDetalle(proceso.centros_costos);
+    this.loadListaCcostosDetalle(this.selectedProceso.centros_costos);
   }
 
   loadListaCcostosDetalle(lista) {
@@ -156,7 +160,7 @@ export class ProductoComponent implements OnInit {
   }
 
   loadListaTipoProductos() {
-    let lista = TIPOS_PRODUCTOS;
+    let lista = this.dataForm.tipos_producto;
 
     this.lista_tipo_producto.push({ label: '', value: null });
 
@@ -185,7 +189,7 @@ export class ProductoComponent implements OnInit {
   }
 
   loadListaProcesos(stp_id) {
-    let precesos = this.procesos.filter((val) => val.sub_tipo_producto.id == stp_id);
+    let precesos = this.dataForm.procesos.filter((val) => val.sub_tipo_producto.id == stp_id);
 
     this.lista_procesos = [];
     this.lista_procesos.push({ label: '', value: null });
@@ -208,7 +212,7 @@ export class ProductoComponent implements OnInit {
   }
 
   loadUnidadesMedida() {
-    let unidades = UNIDADES_MEDIDA;
+    let unidades = this.dataForm.unidades_medida;
 
     this.unidades_medida = [];
     this.unidades_medida.push({ label: '', value: null });
@@ -271,8 +275,7 @@ export class ProductoComponent implements OnInit {
   }
 
   calcularCostos() {
-    this.costo_total_producto = Utils.round(this.producto.ficha_producto.proceso.costos.costo_mo + this.producto.ficha_producto.proceso.costos.costo_gf + this.costo_total_materiales,2);
-    console.log(this.producto);
+    this.costo_total_producto = Utils.round(this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales,2);    
   }
 
 }

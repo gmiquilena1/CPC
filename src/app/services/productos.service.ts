@@ -3,7 +3,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
 import { HttpResponseHandlers } from '../helpers/http';
-import { Producto } from '../helpers/models'
+import { Producto,DataFormProducto } from '../helpers/models'
 
 @Injectable()
 export class ProductosService {
@@ -22,6 +22,13 @@ export class ProductosService {
     return this._http.get('api/productos/buscar/'+id+'?token='+token)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
+  }
+
+  dataForm():Observable<DataFormProducto>{
+    let token = localStorage.getItem('cpc_token');
+    return this._http.get('api/formularios/producto?token='+token)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)
   }
 
 }

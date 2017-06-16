@@ -1,5 +1,4 @@
-<div class="animated fadeIn">
-  {{producto}}
+<div class="animated fadeIn">  
   <div class="card card-accent-success">
     <div class="card-header">
       <i class="fa fa-edit"></i><strong>Nuevo</strong> Prducto
@@ -68,7 +67,7 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="proceso_fabricacion">Proceso de Fabricacion</label>
-                <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="producto.ficha_producto.proceso" [style]="{'width':'100%'}"
+                <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="selectedProceso" [style]="{'width':'100%'}"
                 (onChange)="onChangeProceso($event)"></p-dropdown>
               </div>
             </div>
@@ -196,7 +195,7 @@
       scrollWidth="600px" (onRowSelect)="onSelectMaterial($event)">
       <p-column field="codigo" header="Codigo" [style]="{'width':'20%'}" styleClass='text-left' [sortable]="true"></p-column>
       <p-column field="nombre" header="Descripcion" [style]="{'width':'55%'}" styleClass='text-left' [sortable]="true"></p-column>
-      <p-column field="unidad_medida" header="Unidad" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
+      <p-column field="unidad_medida.siglas" header="Unidad" [style]="{'width':'15%'}" styleClass='text-left'></p-column>
       <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'20%'}" styleClass='text-right'></p-column>
     </p-dataTable>
   </p-overlayPanel>
