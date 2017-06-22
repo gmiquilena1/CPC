@@ -15,7 +15,7 @@ export class Producto {
     ficha_producto?: FichaProducto;
 
     constructor(){
-        this.sub_tipo_producto = new SubTipoProducto;
+        //this.sub_tipo_producto = new SubTipoProducto;
         this.ficha_producto = new FichaProducto;
     }
 }

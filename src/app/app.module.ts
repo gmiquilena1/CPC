@@ -10,6 +10,9 @@ import { ServicesModule } from './services/services.module';
 
 import { AuthGuard } from './helpers';
 
+//primeng
+import {BlockUIModule} from 'primeng/primeng';
+
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -18,7 +21,7 @@ import { NAV_DROPDOWN_DIRECTIVES } from './helpers';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './helpers';
 import { AsideToggleDirective } from './helpers';
-import { BreadcrumbsComponent } from './helpers';
+import { BreadcrumbsComponent, BlockLoadingComponent } from './helpers';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -38,7 +41,8 @@ import { HttpFactory } from "./helpers/http";
     TabsModule.forRoot(),
     ChartsModule,
     BrowserAnimationsModule,
-    ServicesModule.forRoot()
+    ServicesModule.forRoot(),
+    BlockUIModule
   ],
   declarations: [
     AppComponent,
@@ -48,6 +52,7 @@ import { HttpFactory } from "./helpers/http";
     BreadcrumbsComponent,
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
+    BlockLoadingComponent,
   ],
   providers: [{
     provide: LocationStrategy,

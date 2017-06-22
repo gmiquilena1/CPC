@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { ProductosService } from './productos.service';
 import { CentrosCostosService } from './centros-costos.service';
 import { ProcesosService } from './procesos.service';
+import { LoadingService } from './loading.service';
 
 
 @NgModule({
@@ -18,9 +19,10 @@ export class ServicesModule {
       ngModule: ServicesModule,
       providers: [
         AuthService,
+        LoadingService,
         ProductosService,
         CentrosCostosService,
-        ProcesosService,
+        ProcesosService,        
       ]
     };
   }

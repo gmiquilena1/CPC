@@ -9,14 +9,14 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label for="tipo_producto">Tipo Producto</label>
-              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="producto.sub_tipo_producto.tipo_producto" [style]="{'width':'100%'}"
+              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" [style]="{'width':'100%'}"
                 (onChange)="onChangeTipoProducto($event)"></p-dropdown>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
               <label for="sub_tipo_producto">Sub Tipo Producto</label>
-              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="selectedSubTipoProd" [style]="{'width':'100%'}"
+              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="producto.sub_tipo_producto" [style]="{'width':'100%'}"
               (onChange)="onChangeSubTipoProducto($event)"></p-dropdown>
             </div>
           </div>
@@ -50,7 +50,7 @@
               <p-spinner size="15" name="costo_unitario" [(ngModel)]="producto.costo_unitario" [step]="0.5"></p-spinner>
             </div>
           </div>
-          <div class="col-sm-4" *ngIf="producto.sub_tipo_producto.tipo_producto!=null && producto.sub_tipo_producto.tipo_producto.producto_fabricado">
+          <div class="col-sm-4" *ngIf="selectedTipoProd && selectedTipoProd.producto_fabricado">
             <div class="form-group">
               <label for="tiene_ficha" style="width:100%">Crear Ficha de Producto</label>              
               <label class="switch switch-3d switch-primary">
@@ -62,7 +62,7 @@
           </div>
         </div>
         <!--/.row-->
-        <p-panel header="Ficha de Producto" *ngIf="producto.tiene_ficha && producto.sub_tipo_producto.tipo_producto!=null && producto.sub_tipo_producto.tipo_producto.producto_fabricado">
+        <p-panel header="Ficha de Producto" *ngIf="producto.tiene_ficha && selectedTipoProd && selectedTipoProd.producto_fabricado">
           <div class="row">
             <div class="col-sm-3">
               <div class="form-group">
@@ -80,13 +80,13 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="costo_total">Costo Total</label>
-                <input pInputText type="text" [(ngModel)]="costo_total_producto" style="width:100%;opacity: initial;" name="costo_total" disabled>
+                <input pInputText type="text" [(ngModel)]="producto.costo_unitario" style="width:100%;opacity: initial;" name="costo_total" disabled>
               </div>
             </div>
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="costo_unitario">Costo Unitario</label>
-                <input pInputText type="text" style="width:100%;opacity: initial;" name="costo_unitario" disabled>
+                <input pInputText type="text" value="{{calcularCostoUnitarioLote()}}" style="width:100%;opacity: initial;" name="costo_unitario" disabled>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@
     <!--/.card-block-->
     <div class="card-footer">
       <div style="text-align: right">
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" [disabled]="validarForm()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
         <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
       </div>
     </div>
