@@ -11,7 +11,7 @@ import { ServicesModule } from './services/services.module';
 import { AuthGuard } from './helpers';
 
 //primeng
-import {BlockUIModule} from 'primeng/primeng';
+import {BlockUIModule, GrowlModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -31,6 +31,7 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 import { HttpFactory } from "./helpers/http";
+import { NotificationsComponent } from './helpers/components/notifications/notifications.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { HttpFactory } from "./helpers/http";
     ChartsModule,
     BrowserAnimationsModule,
     ServicesModule.forRoot(),
-    BlockUIModule
+    BlockUIModule,
+    GrowlModule
   ],
   declarations: [
     AppComponent,
@@ -53,6 +55,7 @@ import { HttpFactory } from "./helpers/http";
     SIDEBAR_TOGGLE_DIRECTIVES,
     AsideToggleDirective,
     BlockLoadingComponent,
+    NotificationsComponent,
   ],
   providers: [{
     provide: LocationStrategy,

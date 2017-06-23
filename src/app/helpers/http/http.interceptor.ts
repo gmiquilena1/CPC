@@ -48,7 +48,7 @@ export class InterceptedHttp extends Http {
 
     private intercept(observable: Observable<Response>): Observable<Response> {
         return observable.catch((err, source) => {
-            if (err.status == 401) {
+            if (err.status == 401 && this._router.url!="/login") {
                 localStorage.removeItem('cpc_user');
                 localStorage.removeItem('cpc_token');
                 this._router.navigate(['/login']);

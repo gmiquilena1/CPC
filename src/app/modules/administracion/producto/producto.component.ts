@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { OverlayPanel, DataTable, SelectItem } from 'primeng/primeng';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OverlayPanel, DataTable, SelectItem, ConfirmationService } from 'primeng/primeng';
 import { DataFormProducto, Producto, Proceso, Material, CentroCosto, TipoProducto, SubTipoProducto } from '../../../helpers/models';
 import { Utils } from '../../../helpers';
-import { LoadingService, ProductosService } from '../../../services';
+import { LoadingService, ProductosService, NotificationService } from '../../../services';
 
 @Component({
   selector: 'app-producto',
@@ -23,6 +23,8 @@ export class ProductoComponent implements OnInit {
   dtMat: DataTable;
 
   dataForm: DataFormProducto;
+
+  title: string;
 
   producto: Producto = new Producto();
   id_producto: number;
@@ -47,18 +49,21 @@ export class ProductoComponent implements OnInit {
   selectedMaterial: Material;
   newMaterial: Material = new Material();
 
-  costo_total_materiales: number = 0;  
+  costo_total_materiales: number = 0;
 
   constructor(private _location: Location,
     private route: ActivatedRoute,
+    private router: Router,
     private productoService: ProductosService,
-    private loadingService: LoadingService)
-    { }
+    private loadingService: LoadingService,
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService)
+  { }
 
   ngOnInit() {
-    
+
     this.lista_materiales = [];
-    this.loadingService.displayLoading(true);
+    this.loadingService.displayLoading(true);    
     this.productoService.dataForm().subscribe(
       (data) => {
         this.dataForm = data;
@@ -66,28 +71,30 @@ export class ProductoComponent implements OnInit {
         this.route.params.subscribe(params => {
           let id = +params['id'];
           if (id) {
+            this.title="Detalle";
             this.productoService.buscar(id)
               .subscribe(
               (data) => {
                 this.producto = data;
                 this.loadListaTipoProductosDetalle();
                 this.loadUnidadesMedidaDetalle();
-                if(this.producto.tiene_ficha){
-                  this.loadListaProcesosDetalle(this.producto.sub_tipo_producto.id,this.producto.ficha_producto.proceso.id);
+                if (this.producto.tiene_ficha) {
+                  this.loadListaProcesosDetalle(this.producto.sub_tipo_producto.id, this.producto.ficha_producto.proceso.id);
                   for (var item of this.producto.ficha_producto.lista_materiales) {
                     this.costo_total_materiales += item.costo_total;
                   }
-                  this.costo_total_materiales = Utils.round(this.costo_total_materiales,2);
+                  this.costo_total_materiales = Utils.round(this.costo_total_materiales, 2);
                 }
                 this.producto.costo_unitario;
                 this.loadingService.displayLoading(false);
               },
-              (error) => { 
+              (error) => {
                 console.log(error);
                 this.loadingService.displayLoading(false);
-               }
+              }
               );
           } else {
+            this.title="Nuevo";
             this.loadListaTipoProductos();
             this.loadUnidadesMedida();
             this.loadingService.displayLoading(false);
@@ -152,10 +159,10 @@ export class ProductoComponent implements OnInit {
     }
   }
 
-  loadListaProcesosDetalle(stp_id,proceso_id) {
+  loadListaProcesosDetalle(stp_id, proceso_id) {
     let procesos = this.dataForm.procesos.filter((val) => val.sub_tipo_producto.id == stp_id);
-    this.selectedProceso = this.dataForm.procesos.find((val)=>val.id==proceso_id)
-    procesos = procesos.filter((val)=>val.id!=proceso_id);
+    this.selectedProceso = this.dataForm.procesos.find((val) => val.id == proceso_id)
+    procesos = procesos.filter((val) => val.id != proceso_id);
 
     this.lista_procesos = [];
     this.lista_procesos.push({ label: this.selectedProceso.codigo + " - " + this.selectedProceso.nombre, value: this.selectedProceso });
@@ -200,11 +207,16 @@ export class ProductoComponent implements OnInit {
     this.producto.sub_tipo_producto = null;
     if (event.value.producto_fabricado == false)
       this.crear_ficha = false;
-    
+
   }
 
   onChangeSubTipoProducto(event) {
     this.loadListaProcesos(event.value.id);
+    this.productoService.codigoNuevo(event.value.id)
+      .subscribe(
+      (data) => this.producto.codigo = data.data,
+      (error) => console.log(error)
+      )
   }
 
   loadListaProcesos(stp_id) {
@@ -218,9 +230,10 @@ export class ProductoComponent implements OnInit {
   }
 
   onChangeProceso(event) {
-    if(event.value)
+    if (event.value)
       this.loadListaCcostos(event.value.centros_costos);
 
+    this.producto.ficha_producto.proceso = event.value;
     this.calcularCostos();
   }
 
@@ -253,7 +266,7 @@ export class ProductoComponent implements OnInit {
 
     let lista_materiales = [];
 
-    if(this.producto.ficha_producto.lista_materiales!=null)
+    if (this.producto.ficha_producto.lista_materiales != null)
       lista_materiales = [...this.producto.ficha_producto.lista_materiales];
 
     for (var material of lista_materiales) {
@@ -262,6 +275,7 @@ export class ProductoComponent implements OnInit {
     }
 
     var mat = {
+      id: this.newMaterial.id,
       codigo: this.newMaterial.codigo,
       nombre: this.newMaterial.nombre,
       ccosto_consumo: this.newMaterial.ccosto_consumo,
@@ -296,52 +310,75 @@ export class ProductoComponent implements OnInit {
   }
 
   calcularCostos() {
-    if(this.selectedProceso)
-      this.producto.costo_unitario = Utils.round(this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales,2);    
+    if (this.selectedProceso)
+      this.producto.costo_unitario = Utils.round(this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales, 2);
     else
-      this.producto.costo_unitario = Utils.round(this.costo_total_materiales,2);    
+      this.producto.costo_unitario = Utils.round(this.costo_total_materiales, 2);
   }
 
-  calcularCostoUnitarioLote(){
-    if(this.producto.ficha_producto.lote)
-      return Utils.round(this.producto.costo_unitario/this.producto.ficha_producto.lote,2);
+  calcularCostoUnitarioLote() {
+    if (this.producto.ficha_producto.lote)
+      return Utils.round(this.producto.costo_unitario / this.producto.ficha_producto.lote, 2);
     else
       return 0;
   }
 
-  validarForm():boolean{
+  validarForm(): boolean {
 
-    if(!this.producto.sub_tipo_producto)
-      return true;
-    
-    if(!this.producto.codigo || this.producto.codigo=="")
+    if (!this.producto.sub_tipo_producto)
       return true;
 
-    if(!this.producto.nombre || this.producto.nombre=="")
+    if (!this.producto.codigo || this.producto.codigo == "")
       return true;
 
-    if(!this.producto.unidad_medida)
+    if (!this.producto.nombre || this.producto.nombre == "")
       return true;
 
-    if(!this.producto.costo_unitario)
+    if (!this.producto.unidad_medida)
       return true;
 
-    if(this.producto.tiene_ficha){
-      
-      let flag = true;
+    if (!this.producto.costo_unitario)
+      return true;
 
-      if(this.producto.ficha_producto.lista_materiales && this.producto.ficha_producto.lista_materiales.length>0)    
-        flag = false;
-        
-      if(this.producto.ficha_producto.lote)
-        flag = false;
-      else
-        flag = true;
+    if (this.producto.tiene_ficha) {
 
-      return flag;
+      if (!this.producto.ficha_producto.lista_materiales ||
+        (this.producto.ficha_producto.lista_materiales &&
+          !this.producto.ficha_producto.lista_materiales.length)
+        || !this.producto.ficha_producto.lote)
+        return true;
     }
 
     return false;
+  }
+
+  guardar() {
+    this.confirmationService.confirm({
+      message: '¿Seguro que desea guardar el producto?',
+      accept: () => {
+        this.loadingService.displayLoading(true);
+        this.productoService.guardar(this.producto)
+          .subscribe(
+          (data) => {
+            this.loadingService.displayLoading(false);
+            this.notificationService.sendMsg({
+              severity: 'success',
+              summary: 'Exitoso',
+              detail: data.msg
+            })
+            this.router.navigate(['/admin/tabla-productos']);
+          },
+          (error) => {
+            this.loadingService.displayLoading(false);
+            this.notificationService.sendMsg({
+              severity: 'error',
+              summary: 'Error',
+              detail: error
+            })
+          }
+          )
+      }
+    });
   }
 
 }

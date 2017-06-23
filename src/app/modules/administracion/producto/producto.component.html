@@ -1,7 +1,7 @@
 <div class="animated fadeIn">  
   <div class="card card-accent-success">
     <div class="card-header">
-      <i class="fa fa-edit"></i><strong>Nuevo</strong> Prducto
+      <i class="fa fa-edit"></i><strong>{{title}}</strong> Prducto
     </div>
     <div class="card-block">
       <form name="form" autocomplete="off">
@@ -180,7 +180,7 @@
     <!--/.card-block-->
     <div class="card-footer">
       <div style="text-align: right">
-        <button type="button" [disabled]="validarForm()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" [disabled]="validarForm()" (click)="guardar()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
         <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
       </div>
     </div>
@@ -201,3 +201,10 @@
   </p-overlayPanel>
 
 </div>
+
+<p-confirmDialog header="Guardar Producto" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+        <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+        <button type="button" (click)="cd.accept()" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Guardar</button>
+    </p-footer>
+</p-confirmDialog>

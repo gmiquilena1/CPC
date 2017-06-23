@@ -3,7 +3,7 @@
   <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
     <button type="button" class="btn btn-sm btn-success" [routerLink]="['/admin/producto']"><i class="fa fa-plus"></i> Nuevo</button>
     <button type="button" class="btn btn-sm btn-primary" (click)="goDetalleProducto()" [disabled]="!selected"><i class="fa fa-edit"></i> Detalle</button>
-    <button type="button" class="btn btn-sm btn-danger" [disabled]="!selected"><i class="fa fa-trash"></i> Eliminar</button>
+    <button type="button" class="btn btn-sm btn-danger" (click)="eliminar()" [disabled]="!selected"><i class="fa fa-trash"></i> Eliminar</button>
 
     <div style="float: right;">
       <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -19,3 +19,10 @@
     <p-column field="costo_unitario" header="Costo Unitario" [style]="{'width':'15%'}" styleClass='text-right'></p-column>    
   </p-dataTable>
 </div>
+
+<p-confirmDialog header="Eliminar Producto" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+        <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+        <button type="button" (click)="cd.accept()" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Eliminar</button>
+    </p-footer>
+</p-confirmDialog>

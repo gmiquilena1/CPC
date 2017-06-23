@@ -12,13 +12,16 @@
               <p class="text-muted">Inicie sesión con su usuario</p>
               <div class="input-group mb-3">
                 <span class="input-group-addon"><i class="icon-user"></i></span>
-                <input type="text" class="form-control" [(ngModel)]="credenciales.email" placeholder="Usuario" >
+                <input [disabled]="loading" type="text" class="form-control" [(ngModel)]="credenciales.email" placeholder="Usuario" >
               </div>
               <div class="input-group mb-4">
                 <span class="input-group-addon"><i class="icon-lock"></i></span>
-                <input type="password" class="form-control" [(ngModel)]="credenciales.password" placeholder="Contraseña">
+                <input [disabled]="loading" type="password" class="form-control" [(ngModel)]="credenciales.password" placeholder="Contraseña">
               </div>
-              <button type="button" (click)="login()" class="btn btn-primary px-4 pull-right">Iniciar</button>
+              <button *ngIf="!loading; else loader" type="button" (click)="login()" class="btn btn-primary px-4 pull-right">Iniciar</button>
+              <ng-template #loader>
+                <i class="fa fa-spin fa-circle-o-notch fa-2x pull-right"></i>
+              </ng-template>              
             </div>
           </div>
           <div class="card card-inverse card-primary py-5 d-md-down-none" style="width:44%">

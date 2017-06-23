@@ -69,13 +69,13 @@
             <p-dropdown [options]="meses_anio" [(ngModel)]="selectedCity" [style]="{'width':'100%'}"></p-dropdown>
 
             <div class="mb-0 pt-3">
-              <a href="javascript::;" class="btn btn-sm btn-primary pull-left"><i class="fa fa-save"></i> Cambiar Mes</a>
-              <a href="javascript::;" (click)="cambiar_mes=!cambiar_mes" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times"></i> Cancelar</a>
+              <a href="javascript:void(0);" class="btn btn-sm btn-primary pull-left"><i class="fa fa-save"></i> Cambiar Mes</a>
+              <a href="javascript:void(0);" (click)="cambiar_mes=!cambiar_mes" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times"></i> Cancelar</a>
             </div>
           </div>
         </div>
         <div class="card-footer" *ngIf="!cambiar_mes" style="text-align: center">
-          <a href="javascript::;" (click)="cambiar_mes=!cambiar_mes">Cambiar Mes de Cierre</a>
+          <a href="javascript:void(0);" (click)="cambiar_mes=!cambiar_mes">Cambiar Mes de Cierre</a>
         </div>
       </div>
     </div>

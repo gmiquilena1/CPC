@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../../helpers/models';
-import { ProductosService } from '../../../services';
+import { ProductosService, LoadingService, NotificationService } from '../../../services';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'app-tabla-productos',
@@ -13,18 +14,64 @@ export class TablaProductosComponent implements OnInit {
   productos: Producto[];
   selected: Producto;
 
-  constructor(private productosService: ProductosService, private router:Router) { }
+  constructor(private productoService: ProductosService,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private loadingService: LoadingService,
+    private notificationService: NotificationService) { }
 
-  ngOnInit() {   
-    this.productosService.listAll()
+  ngOnInit() {
+    this.productoService.listAll()
       .subscribe(
-        (data) => this.productos = data,
-        (error) => console.log(error)
+      (data) => this.productos = data,
+      (error) => console.log(error)
       )
   }
 
-  goDetalleProducto(){
-    this.router.navigate(['/admin/detalle-producto',this.selected.id]);
+  goDetalleProducto() {
+    this.router.navigate(['/admin/detalle-producto', this.selected.id]);
+  }
+
+  eliminar() {
+    this.confirmationService.confirm({
+      message: '¿Seguro que desea eliminar el producto ' + this.selected.nombre + '?',
+      accept: () => {
+        this.loadingService.displayLoading(true);
+        this.productoService.eliminar(this.selected.id)
+          .subscribe(
+          (data) => {
+            this.loadingService.displayLoading(false);
+
+            switch (data.status) {
+              case 'success':
+                this.notificationService.sendMsg({
+                  severity: 'success',
+                  summary: 'Exitoso',
+                  detail: data.msg
+                });
+                this.productos = this.productos.filter((val) => val.id!=this.selected.id);
+                this.selected = null;
+                break;
+              case 'error':
+                this.notificationService.sendMsg({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: data.msg
+                });
+                break;
+            }
+          },
+          (error) => {
+            this.loadingService.displayLoading(false);
+            this.notificationService.sendMsg({
+              severity: 'error',
+              summary: 'Error',
+              detail: error
+            })
+          }
+          )
+      }
+    });
   }
 
 }

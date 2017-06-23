@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Message } from 'primeng/primeng';
-import { AuthService } from '../../services';
+import { AuthService, LoadingService } from '../../services';
 import 'rxjs/Observable';
 
 @Component({
   templateUrl: 'login.component.html'
 })
 export class LoginComponent implements OnInit {
+
+  loading:boolean;
 
   credenciales: any = {
     email: "",
@@ -18,13 +20,14 @@ export class LoginComponent implements OnInit {
   uploadedFiles: any[] = [];
   msgs: Message[] = [];
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService, private loadingService:LoadingService) { }
 
   ngOnInit() {
-
+    this.loadingService.displayLoading(false);
   }
 
   login() {
+    this.loading = true;
     this.auth.login(this.credenciales)
       .subscribe(
         (data) => this.handlerLogin(data),
@@ -32,9 +35,9 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  handlerLogin(data) {
+  handlerLogin(data) {    
     if (data) {      
-      this.router.navigate(['/']);
+      this.router.navigate(['/']);      
     }
   }
 
@@ -48,6 +51,7 @@ export class LoginComponent implements OnInit {
   }
 
   msgErrorLogin(error:string) {
+    this.loading = false;    
     this.msgs = [];
     
     if(error.includes('invalid_credentials'))
