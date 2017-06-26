@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Proceso } from '../../../helpers/models';
 import { ProcesosService } from '../../../services';
 
@@ -7,11 +8,13 @@ import { ProcesosService } from '../../../services';
   templateUrl: './tabla-procesos.component.html',
   styleUrls: ['./tabla-procesos.component.scss']
 })
-export class TablaProcesosComponent implements OnInit { 
+export class TablaProcesosComponent implements OnInit {
 
-  procesos:Proceso[];
+  procesos: Proceso[];
+  selected: Proceso;
 
-  constructor(private procesosService: ProcesosService) { }
+  constructor(private procesosService: ProcesosService,
+    private router: Router) { }
 
   ngOnInit() {
     this.procesosService.getProcesos()
@@ -20,5 +23,9 @@ export class TablaProcesosComponent implements OnInit {
         (error) => console.log(error)
       )
   }
-  
+
+  goDetalleProceso() {
+    this.router.navigate(['/admin/detalle-proceso', this.selected.id]);
+  }
+
 }

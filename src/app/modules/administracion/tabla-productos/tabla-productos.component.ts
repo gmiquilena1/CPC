@@ -34,7 +34,7 @@ export class TablaProductosComponent implements OnInit {
 
   eliminar() {
     this.confirmationService.confirm({
-      message: '¿Seguro que desea eliminar el producto ' + this.selected.nombre + '?',
+      message: '¿Seguro que desea eliminar el producto "' + this.selected.nombre + '"?',
       accept: () => {
         this.loadingService.displayLoading(true);
         this.productoService.eliminar(this.selected.id)

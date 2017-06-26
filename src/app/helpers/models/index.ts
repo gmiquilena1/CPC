@@ -9,5 +9,5 @@ export * from './mes_cierre';
 export * from './sub_tipo_producto';
 export * from './tipo_producto';
 export * from './unidad_medida';
-export * from './data_form_producto';
+export * from './data_form';
 export * from './api_response';

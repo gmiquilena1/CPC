@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayPanel, DataTable, SelectItem, ConfirmationService } from 'primeng/primeng';
-import { DataFormProducto, Producto, Proceso, Material, CentroCosto, TipoProducto, SubTipoProducto } from '../../../helpers/models';
-import { Utils } from '../../../helpers';
-import { LoadingService, ProductosService, NotificationService } from '../../../services';
+import { DataFormProducto, Producto, Proceso, Material, CentroCosto, TipoProducto, SubTipoProducto } from 'app/helpers/models';
+import { Utils } from 'app/helpers';
+import { LoadingService, ProductosService, NotificationService } from 'app/services';
 
 @Component({
   selector: 'app-producto',
@@ -25,6 +25,7 @@ export class ProductoComponent implements OnInit {
   dataForm: DataFormProducto;
 
   title: string;
+  classCard: string;
 
   producto: Producto = new Producto();
   id_producto: number;
@@ -50,6 +51,7 @@ export class ProductoComponent implements OnInit {
   newMaterial: Material = new Material();
 
   costo_total_materiales: number = 0;
+  costo_total_producto: number = 0;
 
   constructor(private _location: Location,
     private route: ActivatedRoute,
@@ -62,8 +64,17 @@ export class ProductoComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.router.url == "/admin/producto") {
+      this.title = "Nuevo";
+      this.classCard = "card card-accent-success";
+    }
+    else {
+      this.title = "Detalle";
+      this.classCard = "card card-accent-primary";
+    }
+
     this.lista_materiales = [];
-    this.loadingService.displayLoading(true);    
+    this.loadingService.displayLoading(true);
     this.productoService.dataForm().subscribe(
       (data) => {
         this.dataForm = data;
@@ -71,7 +82,6 @@ export class ProductoComponent implements OnInit {
         this.route.params.subscribe(params => {
           let id = +params['id'];
           if (id) {
-            this.title="Detalle";
             this.productoService.buscar(id)
               .subscribe(
               (data) => {
@@ -85,7 +95,7 @@ export class ProductoComponent implements OnInit {
                   }
                   this.costo_total_materiales = Utils.round(this.costo_total_materiales, 2);
                 }
-                this.producto.costo_unitario;
+                this.calcularCostos();
                 this.loadingService.displayLoading(false);
               },
               (error) => {
@@ -94,7 +104,6 @@ export class ProductoComponent implements OnInit {
               }
               );
           } else {
-            this.title="Nuevo";
             this.loadListaTipoProductos();
             this.loadUnidadesMedida();
             this.loadingService.displayLoading(false);
@@ -311,16 +320,22 @@ export class ProductoComponent implements OnInit {
 
   calcularCostos() {
     if (this.selectedProceso)
-      this.producto.costo_unitario = Utils.round(this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales, 2);
+      this.costo_total_producto = Utils.round(this.selectedProceso.costos.costo_mo + this.selectedProceso.costos.costo_gf + this.costo_total_materiales, 2);
     else
-      this.producto.costo_unitario = Utils.round(this.costo_total_materiales, 2);
+      this.costo_total_producto = Utils.round(this.costo_total_materiales, 2);
+
+    this.calcularCostoUnitario();
   }
 
-  calcularCostoUnitarioLote() {
-    if (this.producto.ficha_producto.lote)
-      return Utils.round(this.producto.costo_unitario / this.producto.ficha_producto.lote, 2);
-    else
+  calcularCostoUnitario() {
+    if (this.producto.ficha_producto.lote) {
+      this.producto.costo_unitario = Utils.round(this.costo_total_producto / this.producto.ficha_producto.lote, 2);
+      return Utils.round(this.costo_total_producto / this.producto.ficha_producto.lote, 2);
+    }
+    else {
+      this.producto.costo_unitario = 0;
       return 0;
+    }
   }
 
   validarForm(): boolean {
@@ -361,12 +376,23 @@ export class ProductoComponent implements OnInit {
           .subscribe(
           (data) => {
             this.loadingService.displayLoading(false);
-            this.notificationService.sendMsg({
-              severity: 'success',
-              summary: 'Exitoso',
-              detail: data.msg
-            })
-            this.router.navigate(['/admin/tabla-productos']);
+            switch (data.status) {
+              case 'success':
+                this.notificationService.sendMsg({
+                  severity: 'success',
+                  summary: 'Exitoso',
+                  detail: data.msg
+                })
+                this.router.navigate(['/admin/tabla-productos']);
+                break;
+              case 'error':
+                this.notificationService.sendMsg({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: data.msg
+                })
+                break;
+            }
           },
           (error) => {
             this.loadingService.displayLoading(false);

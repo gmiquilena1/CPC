@@ -1,7 +1,7 @@
-<div class="animated fadeIn">  
-  <div class="card card-accent-success">
+<div class="animated fadeIn">
+  <div [className]="classCard">
     <div class="card-header">
-      <i class="fa fa-edit"></i><strong>{{title}}</strong> Prducto
+      <i class="fa fa-tag"></i><strong>{{title}}</strong> Prducto
     </div>
     <div class="card-block">
       <form name="form" autocomplete="off">
@@ -17,7 +17,7 @@
             <div class="form-group">
               <label for="sub_tipo_producto">Sub Tipo Producto</label>
               <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="producto.sub_tipo_producto" [style]="{'width':'100%'}"
-              (onChange)="onChangeSubTipoProducto($event)"></p-dropdown>
+                (onChange)="onChangeSubTipoProducto($event)"></p-dropdown>
             </div>
           </div>
           <div class="col-sm-4">
@@ -52,7 +52,7 @@
           </div>
           <div class="col-sm-4" *ngIf="selectedTipoProd && selectedTipoProd.producto_fabricado">
             <div class="form-group">
-              <label for="tiene_ficha" style="width:100%">Crear Ficha de Producto</label>              
+              <label for="tiene_ficha" style="width:100%">Crear Ficha de Producto</label>
               <label class="switch switch-3d switch-primary">
                   <input type="checkbox" name="tiene_ficha" [(ngModel)]="producto.tiene_ficha" class="switch-input">
                   <span class="switch-label"></span>
@@ -68,7 +68,7 @@
               <div class="form-group">
                 <label for="proceso_fabricacion">Proceso de Fabricacion</label>
                 <p-dropdown name="proceso_fabricacion" [options]="lista_procesos" [(ngModel)]="selectedProceso" [style]="{'width':'100%'}"
-                (onChange)="onChangeProceso($event)"></p-dropdown>
+                  (onChange)="onChangeProceso($event)"></p-dropdown>
               </div>
             </div>
             <div class="col-sm-2">
@@ -80,13 +80,15 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="costo_total">Costo Total</label>
-                <input pInputText type="text" [(ngModel)]="producto.costo_unitario" style="width:100%;opacity: initial;" name="costo_total" disabled>
+                <input pInputText type="text" [(ngModel)]="costo_total_producto" style="width:100%;opacity: initial;" name="costo_total"
+                  disabled>
               </div>
             </div>
             <div class="col-sm-3">
               <div class="form-group">
                 <label for="costo_unitario">Costo Unitario</label>
-                <input pInputText type="text" value="{{calcularCostoUnitarioLote()}}" style="width:100%;opacity: initial;" name="costo_unitario" disabled>
+                <input pInputText type="text" value="{{calcularCostoUnitario()}}" style="width:100%;opacity: initial;" name="costo_unitario"
+                  disabled>
               </div>
             </div>
           </div>
@@ -96,36 +98,38 @@
               <tabset>
                 <tab>
                   <ng-template tabHeading><i class="fa fa-shopping-cart"></i> Materiales</ng-template>
-                  <div class="row">
-                    <div class="col-sm-5">
-                      <div class="form-group">
-                        <label for="material" style="width:100%">Material</label>
-                        <input LockInput [(ngModel)]="newMaterial.nombre" pInputText type="text" style="width:100%" name="material"
-                         (click)="op1.toggle($event)" placeholder="Seleccione...">
+                  <form #formMaterial="ngForm" autocomplete="off">
+                  <div class="row">                    
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="material" style="width:100%">Material</label>
+                          <input LockInput [(ngModel)]="newMaterial.nombre" pInputText type="text" style="width:100%" name="material" (click)="op1.toggle($event)"
+                            placeholder="Seleccione..." required>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="duracion" style="width:100%">Cantidad</label>
-                        <p-spinner name="duracion" size="15" [(ngModel)]="newMaterial.cantidad" [step]="0.5"></p-spinner>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <label for="duracion" style="width:100%">Cantidad</label>
+                          <p-spinner name="duracion" size="15" [(ngModel)]="newMaterial.cantidad" [step]="0.5" required></p-spinner>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="ccosto">Centro de Costo Consumo</label>
-                        <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newMaterial.ccosto_consumo" [style]="{'width':'100%'}"></p-dropdown>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label for="ccosto">Centro de Costo Consumo</label>
+                          <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newMaterial.ccosto_consumo" [style]="{'width':'100%'}" required></p-dropdown>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div style="padding-top: 25px;">
-                        <button type="button" (click)="agregarMaterial()" [disabled]="!newMaterial.ccosto_consumo" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
-                        <button type="button" (click)="eliminarMaterial()" [disabled]="!selectedMaterial" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                      </div>
-                    </div>
+                      <div class="col-sm-2">
+                        <div style="padding-top: 25px;">
+                          <button type="button" (click)="agregarMaterial()" [disabled]="!formMaterial.valid" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></button>
+                          <button type="button" (click)="eliminarMaterial()" [disabled]="!selectedMaterial" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                        </div>
+                      </div>                    
                   </div>
+                  </form>
                   <!--/.row-->
-                  <p-dataTable [value]="producto.ficha_producto.lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true"
-                    scrollHeight="250px">
+                  <p-dataTable [value]="producto.ficha_producto.lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo"
+                    [resizableColumns]="true" scrollHeight="250px">
                     <p-column field="codigo" header="Codigo" [style]="{'width':'10%'}" styleClass='text-left'></p-column>
                     <p-column field="nombre" header="Nombre" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
                     <p-column field="ccosto_consumo.nombre" header="C.Costo Consumo" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
@@ -203,8 +207,8 @@
 </div>
 
 <p-confirmDialog header="Guardar Producto" icon="fa fa-question-circle" width="425" #cd>
-    <p-footer>
-        <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
-        <button type="button" (click)="cd.accept()" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Guardar</button>
-    </p-footer>
+  <p-footer>
+    <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+    <button type="button" (click)="cd.accept()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+  </p-footer>
 </p-confirmDialog>

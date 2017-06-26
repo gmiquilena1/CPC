@@ -42,9 +42,9 @@ import { NotificationsComponent } from './helpers/components/notifications/notif
     TabsModule.forRoot(),
     ChartsModule,
     BrowserAnimationsModule,
-    ServicesModule.forRoot(),
     BlockUIModule,
-    GrowlModule
+    GrowlModule,
+    ServicesModule.forRoot()    
   ],
   declarations: [
     AppComponent,

@@ -2,7 +2,7 @@
   <h4>Procesos <small>Tabla general de procesos</small></h4>
   <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
     <button type="button" class="btn btn-sm btn-success" [routerLink]="['/admin/proceso']"><i class="fa fa-plus"></i> Nuevo</button>
-    <button type="button" class="btn btn-sm btn-primary" [disabled]="!selected"><i class="fa fa-edit"></i> Detalle</button>
+    <button type="button" class="btn btn-sm btn-primary" (click)="goDetalleProceso()" [disabled]="!selected"><i class="fa fa-edit"></i> Detalle</button>
     <button type="button" class="btn btn-sm btn-danger" [disabled]="!selected"><i class="fa fa-trash"></i> Eliminar</button>
 
     <div style="float: right;">

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 // Routing
@@ -32,6 +32,7 @@ import { CargaMateriasPrimasComponent } from './carga-masiva/carga-materias-prim
 @NgModule({
   imports: [
       FormsModule,
+      ReactiveFormsModule,
       CommonModule,
       AdministracionRoutingModule,
       DataTableModule,

@@ -25,6 +25,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'detalle-proceso/:id',
+        component: ProcesoComponent,
+        data: {
+          title: 'Detalle de Proceso'
+        }
+      },
+      {
         path: 'tabla-procesos',
         component: TablaProcesosComponent,
         data: {

@@ -4,18 +4,18 @@
       <i class="fa fa-edit"></i><strong>Nuevo</strong> Proceso
     </div>
     <div class="card-block">
-      <form name="form" autocomplete="off">
+      <form name="form" #form="ngForm" autocomplete="off">
         <div class="row">
           <div class="col-sm-2">
             <div class="form-group">
               <label for="codigo">Codigo</label>
-              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+              <input pInputText type="text" style="width:100%" name="codigo" [(ngModel)]="proceso.codigo" placeholder="" required>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label for="nombre">Nombre</label>
-              <input pInputText type="text" style="width:100%" name="nombre" placeholder="">
+              <input pInputText type="text" style="width:100%" name="nombre" [(ngModel)]="proceso.nombre" placeholder="">
             </div>
           </div>
           <div class="col-sm-4">
@@ -28,8 +28,8 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="sub_tipo_producto">Sub Tipo Producto</label>
-              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="selectedSubTipoProd"
-               [style]="{'width':'100%'}"></p-dropdown>
+              <p-dropdown name="sub_tipo_producto" [options]="lista_sub_tipo_producto" [(ngModel)]="proceso.sub_tipo_producto"
+               [style]="{'width':'100%'}" required></p-dropdown>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           <div class="col-sm-12">
             <div class="form-group">
               <label for="descripcion">Descripcion</label>
-              <input pInputText type="text" style="width:100%" id="descripcion" placeholder="">
+              <input pInputText type="text" style="width:100%" name="descripcion" [(ngModel)]="proceso.descripcion" placeholder="" required>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="descripcion">Descripcion</label>
-                      <input pInputText type="text" [(ngModel)]="newTarea.descripcion" style="width:100%" name="descripcion" placeholder="">
+                      <input pInputText type="text" [(ngModel)]="newTarea.descripcion" style="width:100%" name="descripcion_tarea" placeholder="">
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -81,7 +81,7 @@
                   </div>
                 </div>
                 <!--/.row-->
-                <p-treeTable [value]="arbol_tareas" selectionMode="single" [(selection)]="selectedTarea">
+                <p-treeTable [value]="proceso.ruta" selectionMode="single" [(selection)]="selectedTarea">
                   <!--<p-header>Singe Selection</p-header>-->
                   <p-column field="nombre" header="Nombre"></p-column>
                   <p-column field="descripcion" header="Descripcion"></p-column>
@@ -102,9 +102,16 @@
     <!--/.card-block-->
     <div class="card-footer">
       <div style="text-align: right">
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" (click)="guardar()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
         <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+<p-confirmDialog header="Guardar Proceso" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+    <button type="button" (click)="cd.accept()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+  </p-footer>
+</p-confirmDialog>
