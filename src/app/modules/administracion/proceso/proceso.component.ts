@@ -14,6 +14,10 @@ import { DataFormProceso, Proceso, Tarea, NodoCcosto } from 'app/helpers/models'
 export class ProcesoComponent implements OnInit {
 
     dataForm: DataFormProceso;
+
+    title: string;
+    classCard: string;
+
     proceso: Proceso = new Proceso;
 
     lista_ccostos: SelectItem[];
@@ -40,6 +44,15 @@ export class ProcesoComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.router.url == "/admin/proceso") {
+            this.title = "Nuevo";
+            this.classCard = "card card-accent-success";
+        }
+        else {
+            this.title = "Detalle";
+            this.classCard = "card card-accent-primary";
+        }
+
         this.loadingService.displayLoading(true);
         this.procesosService.dataForm().subscribe(
             (data) => {
@@ -52,6 +65,10 @@ export class ProcesoComponent implements OnInit {
                                 this.loadingService.displayLoading(false);
                                 this.proceso = data;
                                 this.loadListaTipoProductosDetalle();
+
+                                this.proceso.ruta.forEach(val => {
+                                    this.total_duracion += val.data.duracion;
+                                });
                             },
                             (error) => {
                                 this.loadingService.displayLoading(false);
@@ -205,6 +222,26 @@ export class ProcesoComponent implements OnInit {
 
     goBack(): void {
         this._location.back();
+    }
+
+    validarForm(): boolean {
+
+        if (!this.proceso.sub_tipo_producto)
+            return true;
+
+        if (!this.proceso.codigo || this.proceso.codigo == "")
+            return true;
+
+        if (!this.proceso.nombre || this.proceso.nombre == "")
+            return true;
+
+        if (!this.proceso.descripcion)
+            return true;
+        
+        if (!this.proceso.ruta.length) 
+            return true;
+
+        return false;
     }
 
     guardar() {

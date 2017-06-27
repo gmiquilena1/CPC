@@ -19,6 +19,7 @@ export class NotificationsComponent implements OnInit {
           if(newMsg){
             this.msgs = [];
             this.msgs.push(newMsg);
+            this.notificationService.sendMsg(null);
           } 
         }
     )

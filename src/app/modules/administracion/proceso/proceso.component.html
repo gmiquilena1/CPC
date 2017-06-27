@@ -1,7 +1,7 @@
 <div class="animated fadeIn">
-  <div class="card card-accent-success">
+  <div [className]="classCard">
     <div class="card-header">
-      <i class="fa fa-edit"></i><strong>Nuevo</strong> Proceso
+      <i class="fa fa-gears"></i><strong>{{title}}</strong> Proceso
     </div>
     <div class="card-block">
       <form name="form" #form="ngForm" autocomplete="off">
@@ -15,7 +15,7 @@
           <div class="col-sm-3">
             <div class="form-group">
               <label for="nombre">Nombre</label>
-              <input pInputText type="text" style="width:100%" name="nombre" [(ngModel)]="proceso.nombre" placeholder="">
+              <input pInputText type="text" style="width:100%" name="nombre" [(ngModel)]="proceso.nombre" placeholder="" required>
             </div>
           </div>
           <div class="col-sm-4">
@@ -52,7 +52,7 @@
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="ccosto">Centro de Costo</label>
-                      <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newTarea.ccosto" [style]="{'width':'100%'}"></p-dropdown>
+                      <p-dropdown name="ccosto" [options]="lista_ccostos" [(ngModel)]="newTarea.ccosto" [style]="{'width':'100%'}" filter="filter"></p-dropdown>
                     </div>
                   </div>
                   <div class="col-sm-2">
@@ -102,7 +102,7 @@
     <!--/.card-block-->
     <div class="card-footer">
       <div style="text-align: right">
-        <button type="button" (click)="guardar()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" (click)="guardar()" class="btn btn-sm btn-success" [disabled]="validarForm()"><i class="fa fa-save"></i> Guardar</button>
         <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
       </div>
     </div>

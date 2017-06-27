@@ -38,4 +38,11 @@ export class ProcesosService {
     .catch(HttpResponseHandlers.handleError)
   }
 
+  eliminar(id:number):Observable<ApiResponse>{
+    let token = localStorage.getItem('cpc_token');
+    return this._http.delete('api/procesos/eliminar/'+id+'?token='+token)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)
+  }
+
 }

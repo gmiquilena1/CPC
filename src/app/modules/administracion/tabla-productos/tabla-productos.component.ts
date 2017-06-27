@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../../../helpers/models';
-import { ProductosService, LoadingService, NotificationService } from '../../../services';
+import { Producto } from 'app/helpers/models';
+import { ProductosService, LoadingService, NotificationService } from 'app/services';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/primeng';
 

@@ -339,7 +339,7 @@ export class ProductoComponent implements OnInit {
   }
 
   validarForm(): boolean {
-
+  
     if (!this.producto.sub_tipo_producto)
       return true;
 
