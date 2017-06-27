@@ -106,7 +106,7 @@ export class ProductoComponent implements OnInit {
           } else {
             this.loadingService.displayLoading(false);
             this.loadListaTipoProductos();
-            this.loadUnidadesMedida();            
+            this.loadUnidadesMedida();
           }
         });
 
@@ -221,6 +221,7 @@ export class ProductoComponent implements OnInit {
 
   onChangeSubTipoProducto(event) {
     this.loadListaProcesos(event.value.id);
+    this.loadListaCcostos(null);
     this.productoService.codigoNuevo(event.value.id)
       .subscribe(
       (data) => this.producto.codigo = data.data,
@@ -241,6 +242,8 @@ export class ProductoComponent implements OnInit {
   onChangeProceso(event) {
     if (event.value)
       this.loadListaCcostos(event.value.centros_costos);
+    else
+      this.loadListaCcostos(null);
 
     this.producto.ficha_producto.proceso = event.value;
     this.calcularCostos();
@@ -339,7 +342,7 @@ export class ProductoComponent implements OnInit {
   }
 
   validarForm(): boolean {
-  
+
     if (!this.producto.sub_tipo_producto)
       return true;
 
