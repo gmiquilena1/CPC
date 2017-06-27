@@ -9,6 +9,7 @@ export class DashboardComponent implements OnInit {
 
   msgs: Message[] = [];
   meses_anio:SelectItem[] = [];
+  cambiar_mes:boolean;
 
 
   constructor() { }

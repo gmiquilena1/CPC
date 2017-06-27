@@ -10,6 +10,7 @@ import { CentrosCostosService } from '../../../services';
 export class TablaCentrosCostosComponent implements OnInit {
 
   centros_costos: CentroCosto[];
+  selected: CentroCosto;
 
   constructor(private centrosCostosService: CentrosCostosService) { }
 

@@ -11,6 +11,8 @@ export class CentroCostoComponent implements OnInit {
   constructor(private _location:Location) { }
 
   reporta:boolean = false;
+  selectedTipoProd: any;
+  lista_tipo_producto: any;
 
   ngOnInit() {
   }
