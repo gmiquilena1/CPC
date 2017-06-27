@@ -27,3 +27,7 @@ h4 small{
 .ui-widget-content .ui-dialog-buttonpane{
     border: none !important;
 }
+
+.ui-blockui{
+    z-index: 10001 !important;
+}

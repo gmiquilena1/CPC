@@ -104,9 +104,9 @@ export class ProductoComponent implements OnInit {
               }
               );
           } else {
-            this.loadListaTipoProductos();
-            this.loadUnidadesMedida();
             this.loadingService.displayLoading(false);
+            this.loadListaTipoProductos();
+            this.loadUnidadesMedida();            
           }
         });
 

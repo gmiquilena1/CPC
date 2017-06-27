@@ -21,7 +21,7 @@ import { NAV_DROPDOWN_DIRECTIVES } from './helpers';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { SIDEBAR_TOGGLE_DIRECTIVES } from './helpers';
 import { AsideToggleDirective } from './helpers';
-import { BreadcrumbsComponent, BlockLoadingComponent } from './helpers';
+import { BreadcrumbsComponent, BlockLoadingComponent, NotificationsComponent } from './helpers';
 
 // Routing Module
 import { AppRoutingModule } from './app.routing';
@@ -31,7 +31,6 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 
 import { HttpFactory } from "./helpers/http";
-import { NotificationsComponent } from './helpers/components/notifications/notifications.component';
 
 @NgModule({
   imports: [
