@@ -94,8 +94,8 @@ export class ProductoComponent implements OnInit {
                     this.costo_total_materiales += item.costo_total;
                   }
                   this.costo_total_materiales = Utils.round(this.costo_total_materiales, 2);
+                  this.calcularCostos();
                 }
-                this.calcularCostos();
                 this.loadingService.displayLoading(false);
               },
               (error) => {
@@ -252,6 +252,10 @@ export class ProductoComponent implements OnInit {
   loadListaCcostos(lista) {
     this.lista_ccostos = [];
     this.lista_ccostos.push({ label: '', value: null });
+    
+    if(!lista)
+      return;
+      
     for (var ccosto of lista) {
       this.lista_ccostos.push({ label: ccosto.nombre, value: ccosto });
     }

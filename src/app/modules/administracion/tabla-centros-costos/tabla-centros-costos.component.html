@@ -2,8 +2,8 @@
   <h4>Centros de Costo <small>Tabla general de centros de costos</small></h4>
   <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
     <button type="button" class="btn btn-sm btn-success" [routerLink]="['/admin/ccosto']"><i class="fa fa-plus"></i> Nuevo</button>
-    <button type="button" class="btn btn-sm btn-primary" [disabled]="!selected"><i class="fa fa-edit"></i> Detalle</button>
-    <button type="button" class="btn btn-sm btn-danger" [disabled]="!selected"><i class="fa fa-trash"></i> Eliminar</button>
+    <button type="button" class="btn btn-sm btn-primary" (click)="goDetalleCcosto()" [disabled]="!selected"><i class="fa fa-edit"></i> Detalle</button>
+    <button type="button" class="btn btn-sm btn-danger" (click)="eliminar()" [disabled]="!selected"><i class="fa fa-trash"></i> Eliminar</button>
 
     <div style="float: right;">
       <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -25,3 +25,10 @@
     </p-column>
   </p-dataTable>
 </div>
+
+<p-confirmDialog header="Eliminar Centro de Costo" icon="fa fa-question-circle" width="425" #cd>
+    <p-footer>
+        <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+        <button type="button" (click)="cd.accept()" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
+    </p-footer>
+</p-confirmDialog>

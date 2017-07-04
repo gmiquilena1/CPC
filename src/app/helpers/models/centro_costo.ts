@@ -8,6 +8,11 @@ export class CentroCosto{
         id?:number;
         nombre?:string;
     };
-    reporta?: boolean;
+    reporta?: boolean = false;
     color?: string;
+}
+
+export class TipoCcosto{
+    id?: number;
+    nombre: string;
 }

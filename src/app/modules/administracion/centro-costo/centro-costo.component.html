@@ -1,34 +1,35 @@
 <div class="animated fadeIn">
-  <div class="card card-accent-success">
+  <div [className]="classCard">
     <div class="card-header">
-      <i class="fa fa-edit"></i><strong>Nuevo</strong> Centro de Costo
+      <i class="fa fa-sitemap"></i><strong>{{title}}</strong> Centro de Costo
     </div>
-    <div class="card-block">
-      <form name="form" autocomplete="off">
+    <form name="form" #form="ngForm" autocomplete="off">
+      <div class="card-block">
         <div class="row">
           <div class="col-sm-3">
             <div class="form-group">
               <label for="codigo">Codigo</label>
-              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+              <input pInputText type="text" style="width:100%" name="codigo" [(ngModel)]="centroCosto.codigo" placeholder="" required>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label for="codigo">Nombre</label>
-              <input pInputText type="text" style="width:100%" name="codigo" placeholder="">
+              <input pInputText type="text" style="width:100%" name="nombre" [(ngModel)]="centroCosto.nombre" placeholder="" required>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label for="tipo_producto">Tipo</label>
-              <p-dropdown name="tipo_producto" [options]="lista_tipo_producto" [(ngModel)]="selectedTipoProd" [style]="{'width':'100%'}"></p-dropdown>
+              <p-dropdown name="tipo_producto" [options]="lista_tipos" [(ngModel)]="centroCosto.tipo_centro_costo" [style]="{'width':'100%'}"
+                required></p-dropdown>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="form-group">
               <label for="reporta" style="width:100%">Reporta Producción</label>
               <label class="switch switch-3d switch-primary">
-                  <input type="checkbox" name="reporta" [(ngModel)]="reporta" class="switch-input">
+                  <input type="checkbox" name="reporta" [(ngModel)]="centroCosto.reporta" class="switch-input">
                   <span class="switch-label"></span>
                   <span class="switch-handle"></span>
               </label>
@@ -36,42 +37,48 @@
           </div>
         </div>
         <!--/.row-->
-      </form>
-
-      <div class="row" *ngIf="true">
-        <div class="col-md-12">
-          <tabset>
-            <tab>
-              <ng-template tabHeading><i class="fa fa-money"></i> Conceptos de Gastos</ng-template>
-              <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
-                <p-column field="nombre" header="Elemento de Costo / Codigo"></p-column>
-                <p-column field="descripcion" header="Descripcion"></p-column>
-                <p-column field="monto" header="Monto" styleClass='text-right'></p-column>
-                <p-footer>
-                  <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
-                </p-footer>
-              </p-treeTable>
-            </tab>
-            <tab>
-              <ng-template tabHeading><i class="fa fa-clock-o"></i> Horas</ng-template>
-              <p-dataTable [value]="lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true">
-                <p-column field="fecha" header="Fecha" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
-                <p-column field="elemento_costo" header="Elemento de Costo" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
-                <p-column field="cantidad_horas" header="Cantida de Horas" [style]="{'width':'15%'}" styleClass='text-right'></p-column>                
-              </p-dataTable>
-            </tab>
-          </tabset>
+        <div class="row" *ngIf="true">
+          <div class="col-md-12">
+            <tabset>
+              <tab>
+                <ng-template tabHeading><i class="fa fa-money"></i> Conceptos de Gastos</ng-template>
+                <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                  <p-column field="nombre" header="Elemento de Costo / Codigo"></p-column>
+                  <p-column field="descripcion" header="Descripcion"></p-column>
+                  <p-column field="monto" header="Monto" styleClass='text-right'></p-column>
+                  <p-footer>
+                    <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                  </p-footer>
+                </p-treeTable>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="fa fa-clock-o"></i> Horas</ng-template>
+                <p-dataTable [value]="lista_materiales" selectionMode="single" [(selection)]="selectedMaterial" dataKey="codigo" [resizableColumns]="true">
+                  <p-column field="fecha" header="Fecha" [style]="{'width':'20%'}" styleClass='text-left'></p-column>
+                  <p-column field="elemento_costo" header="Elemento de Costo" [style]="{'width':'55%'}" styleClass='text-left'></p-column>
+                  <p-column field="cantidad_horas" header="Cantida de Horas" [style]="{'width':'15%'}" styleClass='text-right'></p-column>
+                </p-dataTable>
+              </tab>
+            </tabset>
+          </div>
+          <!--/.col-->
         </div>
-        <!--/.col-->
+        <!--/.row-->
       </div>
-      <!--/.row-->
-    </div>
-    <!--/.card-block-->
-    <div class="card-footer">
-      <div style="text-align: right">
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
-        <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
+      <!--/.card-block-->
+      <div class="card-footer">
+        <div style="text-align: right">
+          <button type="button" class="btn btn-sm btn-success" (click)="guardar()" [disabled]="!form.valid"><i class="fa fa-save"></i> Guardar</button>
+          <button type="button" (click)="goBack()" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Cancelar</button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
+
+<p-confirmDialog header="Guardar Centro de Costo" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" (click)="cd.reject()" class="btn btn-sm btn-outline-secondary"><i class="fa fa-ban"></i> Cancelar</button>
+    <button type="button" (click)="cd.accept()" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+  </p-footer>
+</p-confirmDialog>

@@ -12,7 +12,9 @@ export class Proceso {
         costo_mo: number,
         costo_gf: number
     }
-    ruta?: NodoCcosto[]
+    ruta?: NodoCcosto[];
+    arbolGastoFabrica: NodoCcostoGastos[];
+    arbolManoObra: NodoCcostoGastos[];
 
     constructor(){
         this.ruta = new Array<NodoCcosto>();
@@ -36,6 +38,31 @@ export class Tarea {
         nombre?: string;
         descripcion?: string;
         duracion?: number;        
+    }
+    parent?:any;
+}
+
+export class NodoCcostoGastos {
+
+    data?: {
+        centro_costo_id?: number;
+        nombre?: string;
+        descripcion?: string;
+        duracion?: number;
+        costo_unitario?: number;
+        costo_total?: number;
+    };
+    expanded?: boolean;
+    children?: TareaGastos[];
+}
+
+export class TareaGastos {
+    data?: {
+        nombre?: string;
+        descripcion?: string;
+        duracion?: number;
+        costo_unitario?: number;
+        costo_total?: number;        
     }
     parent?:any;
 }

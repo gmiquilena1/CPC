@@ -60,6 +60,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'detalle-ccosto/:id',
+        component: CentroCostoComponent,
+        data: {
+          title: 'Detalle Centro de Costo'
+        }
+      },
+      {
         path: 'ccosto',
         component: CentroCostoComponent,
         data: {

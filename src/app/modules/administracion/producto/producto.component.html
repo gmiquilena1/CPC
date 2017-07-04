@@ -147,7 +147,7 @@
                 </tab>
                 <tab>
                   <ng-template tabHeading><i class="fa fa-users"></i> Mano de Obra</ng-template>
-                  <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                  <p-treeTable [value]="selectedProceso?selectedProceso.arbolManoObra:null" selectionMode="single" [(selection)]="selectedFile">
                     <!--<p-header>Singe Selection</p-header>-->
                     <p-column field="nombre" header="Nombre"></p-column>
                     <p-column field="descripcion" header="Descripcion"></p-column>
@@ -155,13 +155,13 @@
                     <p-column field="costo_unitario" header="Costo Unitario" styleClass='text-right'></p-column>
                     <p-column field="costo_total" header="Costo Total" styleClass='text-right'></p-column>
                     <p-footer>
-                      <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                      <div style="text-align: right;"><strong>Costo Total: {{selectedProceso?selectedProceso.costos.costo_mo:0}}</strong></div>
                     </p-footer>
                   </p-treeTable>
                 </tab>
                 <tab>
                   <ng-template tabHeading><i class="fa fa-gear"></i> Gastos de Fabrica</ng-template>
-                  <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                  <p-treeTable [value]="selectedProceso?selectedProceso.arbolGastoFabrica:null" selectionMode="single" [(selection)]="selectedFile">
                     <!--<p-header>Singe Selection</p-header>-->
                     <p-column field="nombre" header="Nombre"></p-column>
                     <p-column field="descripcion" header="Descripcion"></p-column>
@@ -169,7 +169,7 @@
                     <p-column field="costo_unitario" header="Costo Unitario" styleClass='text-right'></p-column>
                     <p-column field="costo_total" header="Costo Total" styleClass='text-right'></p-column>
                     <p-footer>
-                      <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                      <div style="text-align: right;"><strong>Costo Total: {{selectedProceso?selectedProceso.costos.costo_gf:0}}</strong></div>
                     </p-footer>
                   </p-treeTable>
                 </tab>
