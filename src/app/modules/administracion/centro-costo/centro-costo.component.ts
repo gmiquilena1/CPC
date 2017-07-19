@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectItem, ConfirmationService } from 'primeng/primeng';
-import { CentroCosto, TipoCcosto, DataFormCentroCosto } from 'app/helpers';
+import { CentroCosto, TipoCcosto, DataFormCentroCosto, Utils } from 'app/helpers';
 import { CentrosCostosService, LoadingService, NotificationService } from 'app/services';
 
 @Component({
@@ -19,6 +19,8 @@ export class CentroCostoComponent implements OnInit {
   classCard: string;
 
   lista_tipos: SelectItem[];
+
+  total_costo: number = 0;
 
   constructor(private _location: Location,
     private route: ActivatedRoute,
@@ -50,6 +52,10 @@ export class CentroCostoComponent implements OnInit {
               (data) => {
                 this.loadingService.displayLoading(false);
                 this.centroCosto = data;
+                this.centroCosto.conceptos_gastos.forEach(val => {
+                  this.total_costo += val.data.costo_real;
+                  this.total_costo = Utils.round(this.total_costo,2);
+                });                
                 this.loadListaTiposCcostoDetalle();
               },
               (error) => {

@@ -42,12 +42,12 @@
             <tabset>
               <tab>
                 <ng-template tabHeading><i class="fa fa-money"></i> Conceptos de Gastos</ng-template>
-                <p-treeTable [value]="treeData" selectionMode="single" [(selection)]="selectedFile">
+                <p-treeTable [value]="centroCosto.conceptos_gastos" selectionMode="single" [(selection)]="selectedFile">
                   <p-column field="nombre" header="Elemento de Costo / Codigo"></p-column>
                   <p-column field="descripcion" header="Descripcion"></p-column>
-                  <p-column field="monto" header="Monto" styleClass='text-right'></p-column>
+                  <p-column field="costo_real" header="Monto" styleClass='text-right'></p-column>
                   <p-footer>
-                    <div style="text-align: right;"><strong>Costo Total: 0</strong></div>
+                    <div style="text-align: right;"><strong>Costo Total: {{total_costo}}</strong></div>
                   </p-footer>
                 </p-treeTable>
               </tab>
