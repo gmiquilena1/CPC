@@ -9,7 +9,7 @@ import { AdministracionRoutingModule } from './administracion.routing';
 import {DataTableModule,SharedModule,CalendarModule,TreeTableModule,
         TreeModule,ButtonModule,InputTextModule,DropdownModule,SpinnerModule,
         PanelModule,OverlayPanelModule,FileUploadModule,
-        ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
+        ConfirmDialogModule,ConfirmationService,ContextMenuModule} from 'primeng/primeng';
 
 // Tabs Component
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -48,7 +48,8 @@ import { CargaMateriasPrimasComponent } from './carga-masiva/carga-materias-prim
       PanelModule,
       OverlayPanelModule,
       FileUploadModule,
-      ConfirmDialogModule      
+      ConfirmDialogModule,
+      ContextMenuModule      
   ],
   declarations: [
   ProcesoComponent,

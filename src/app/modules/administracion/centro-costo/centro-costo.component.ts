@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SelectItem, ConfirmationService } from 'primeng/primeng';
+import { SelectItem, ConfirmationService, MenuItem } from 'primeng/primeng';
 import { CentroCosto, TipoCcosto, DataFormCentroCosto, Utils } from 'app/helpers';
 import { CentrosCostosService, LoadingService, NotificationService } from 'app/services';
 
@@ -22,6 +22,12 @@ export class CentroCostoComponent implements OnInit {
 
   total_costo: number = 0;
 
+  itemsCg: MenuItem[];
+  itemsTmp: MenuItem[];
+
+  selectedConceptoGasto: any[];
+  selectedTiempo: any[];
+
   constructor(private _location: Location,
     private route: ActivatedRoute,
     private router: Router,
@@ -41,6 +47,14 @@ export class CentroCostoComponent implements OnInit {
       this.classCard = "card card-accent-primary";
     }
 
+    this.itemsCg = [
+      { label: 'Eliminar', icon: 'fa-trash', command: (event) => this.deleteConceptoGasto(this.selectedConceptoGasto) }
+    ];
+
+    this.itemsTmp = [
+      { label: 'Eliminar', icon: 'fa-trash', command: (event) => this.deleteTiempo(this.selectedTiempo) }
+    ];
+
     this.loadingService.displayLoading(true);
     this.centrosCostoService.dataForm().subscribe(
       (data) => {
@@ -54,8 +68,8 @@ export class CentroCostoComponent implements OnInit {
                 this.centroCosto = data;
                 this.centroCosto.conceptos_gastos.forEach(val => {
                   this.total_costo += val.data.costo_real;
-                  this.total_costo = Utils.round(this.total_costo,2);
-                });                
+                  this.total_costo = Utils.round(this.total_costo, 2);
+                });
                 this.loadListaTiposCcostoDetalle();
               },
               (error) => {
@@ -148,6 +162,14 @@ export class CentroCostoComponent implements OnInit {
         );
       }
     })
+  }
+
+  deleteConceptoGasto(cg) {
+
+  }
+
+  deleteTiempo(tiempo) {
+
   }
 
 }
