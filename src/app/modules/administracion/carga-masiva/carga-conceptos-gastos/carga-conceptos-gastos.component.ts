@@ -18,6 +18,14 @@ export class CargaConceptosGastosComponent implements OnInit {
     console.log(event);
   }
 
+  private onBeforeSend(event) {
+    
+    var xhr:XMLHttpRequest = event.xhr;
+    //event.xhr.setRequestHeader("Host", "http://google.com");
+    var headers = event.xhr.getAllResponseHeaders().toLowerCase();
+    alert(headers);
+  }
+
   onUpload(event) {
     console.log(event);
     for (let file of event.files) {

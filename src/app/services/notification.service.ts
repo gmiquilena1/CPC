@@ -4,7 +4,7 @@ import { Message } from 'primeng/primeng';
 
 @Injectable()
 export class NotificationService {
-    private msg: BehaviorSubject<Message> = new BehaviorSubject<Message>(false);
+    private msg: BehaviorSubject<Message> = new BehaviorSubject<Message>(null);
 
     sendMsg(value: Message) {
         this.msg.next(value);

@@ -11,36 +11,31 @@ export class ProcesosService {
   constructor(private _http: Http) { }
 
   getProcesos():Observable<Proceso[]>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/procesos?token='+token)
+    return this._http.get('api/procesos')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   buscar(id:number):Observable<Proceso>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/procesos/buscar/'+id+'?token='+token)
+    return this._http.get('api/procesos/buscar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   dataForm():Observable<DataFormProceso>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/formularios/proceso?token='+token)
+    return this._http.get('api/formularios/proceso')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   guardar(proceso:Proceso):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.post('api/procesos/guardar?token='+token,{proceso:proceso})
+    return this._http.post('api/procesos/guardar',{proceso:proceso})
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   eliminar(id:number):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.delete('api/procesos/eliminar/'+id+'?token='+token)
+    return this._http.delete('api/procesos/eliminar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }

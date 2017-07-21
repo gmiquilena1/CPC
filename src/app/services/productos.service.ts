@@ -11,43 +11,37 @@ export class ProductosService {
   constructor(private _http: Http) { }
 
   listAll():Observable<Producto[]>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/productos?token='+token)
+    return this._http.get('api/productos')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   buscar(id:number):Observable<Producto>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/productos/buscar/'+id+'?token='+token)
+    return this._http.get('api/productos/buscar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   dataForm():Observable<DataFormProducto>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/formularios/producto?token='+token)
+    return this._http.get('api/formularios/producto')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   codigoNuevo(sub_tipo_id):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/productos/codigo-nuevo/'+sub_tipo_id+'?token='+token)
+    return this._http.get('api/productos/codigo-nuevo/'+sub_tipo_id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)   
   }
 
   guardar(producto:Producto):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.post('api/productos/guardar?token='+token,{producto:producto})
+    return this._http.post('api/productos/guardar',{producto:producto})
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   eliminar(id:number):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.delete('api/productos/eliminar/'+id+'?token='+token)
+    return this._http.delete('api/productos/eliminar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }

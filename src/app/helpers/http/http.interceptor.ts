@@ -31,7 +31,7 @@ export class InterceptedHttp extends Http {
     }
 
     private updateUrl(req: string) {
-        return environment.origin + req;
+        return environment.origin + req + "?token="+localStorage.getItem('cpc_token');
     }
 
     private getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {

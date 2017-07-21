@@ -11,36 +11,31 @@ export class CentrosCostosService {
   constructor(private _http: Http) { }
 
   listAll():Observable<CentroCosto[]>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/ccosto?token='+token)
+    return this._http.get('api/ccosto')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   dataForm():Observable<DataFormCentroCosto>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/formularios/centro-costo?token='+token)
+    return this._http.get('api/formularios/centro-costo')
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   buscar(id:number):Observable<CentroCosto>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.get('api/ccosto/buscar/'+id+'?token='+token)
+    return this._http.get('api/ccosto/buscar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)    
   }
 
   guardar(ccosto:CentroCosto):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.post('api/ccosto/guardar?token='+token,{ccosto:ccosto})
+    return this._http.post('api/ccosto/guardar',{ccosto:ccosto})
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }
 
   eliminar(id:number):Observable<ApiResponse>{
-    let token = localStorage.getItem('cpc_token');
-    return this._http.delete('api/ccosto/eliminar/'+id+'?token='+token)
+    return this._http.delete('api/ccosto/eliminar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
   }  
