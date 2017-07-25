@@ -38,6 +38,12 @@ export class CentrosCostosService {
     return this._http.delete('api/ccosto/eliminar/'+id)
     .map(HttpResponseHandlers.extractData)
     .catch(HttpResponseHandlers.handleError)
-  }  
+  }
+
+  eliminarConceptoGasto(codigo:number):Observable<ApiResponse>{
+    return this._http.delete('api/ccosto/eliminar-concepto-gasto/'+codigo)
+    .map(HttpResponseHandlers.extractData)
+    .catch(HttpResponseHandlers.handleError)
+  }   
 
 }

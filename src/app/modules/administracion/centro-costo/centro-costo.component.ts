@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectItem, ConfirmationService, MenuItem } from 'primeng/primeng';
-import { CentroCosto, TipoCcosto, DataFormCentroCosto, Utils } from 'app/helpers';
+import { CentroCosto, TipoCcosto, DataFormCentroCosto, Utils, TiempoCcosto } from 'app/helpers';
 import { CentrosCostosService, LoadingService, NotificationService } from 'app/services';
 
 @Component({
@@ -25,8 +25,8 @@ export class CentroCostoComponent implements OnInit {
   itemsCg: MenuItem[];
   itemsTmp: MenuItem[];
 
-  selectedConceptoGasto: any[];
-  selectedTiempo: any[];
+  selectedConceptoGasto: any;
+  selectedTiempo: TiempoCcosto;
 
   constructor(private _location: Location,
     private route: ActivatedRoute,

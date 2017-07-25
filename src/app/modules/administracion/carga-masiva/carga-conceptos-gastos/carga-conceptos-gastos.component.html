@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-4">
-    <p-fileUpload name="demo[]" url="http://localhost/CPC2/public/api/carga_masiva/upload?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvQ1BDXC9wdWJsaWNcL2FwaVwvYXV0aGVudGljYXRlIiwiaWF0IjoxNDk3MDI0OTMzLCJleHAiOjE0OTcwMjg1MzMsIm5iZiI6MTQ5NzAyNDkzMywianRpIjoiMUFOamI5elVCMmFwTlM1TSJ9.mBfBH1ONlht3YZDSg2hOEY0cwyj4gbYxMQTqVxjHktc"
+    <p-fileUpload name="demo[]" customUpload="true" (uploadHandler)="uploadHandler($event)"
       (onUpload)="onUpload($event)" (onBeforeSend)="onBeforeSend($event)" accept=".xlsx,.xls" maxFileSize="1000000" 
       chooseLabel="Archivo" uploadLabel="Subir" cancelLabel="Cancelar">
       <ng-template pTemplate="toolbar">

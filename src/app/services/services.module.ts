@@ -7,6 +7,7 @@ import { CentrosCostosService } from './centros-costos.service';
 import { ProcesosService } from './procesos.service';
 import { LoadingService } from './loading.service';
 import { NotificationService } from './notification.service';
+import { CargaMasivaService } from './carga-masiva.service';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ export class ServicesModule {
         ProductosService,
         CentrosCostosService,
         ProcesosService,
-        NotificationService        
+        NotificationService,
+        CargaMasivaService        
       ]
     };
   }

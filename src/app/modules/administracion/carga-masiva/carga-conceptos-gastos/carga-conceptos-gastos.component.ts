@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'environments/environment';
+import { ConfirmationService } from 'primeng/primeng';
+import { CargaMasivaService, LoadingService, NotificationService } from 'app/services';
 
 @Component({
   selector: 'app-carga-conceptos-gastos',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CargaConceptosGastosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cargaMasivaService: CargaMasivaService,
+    private loadingService: LoadingService,
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
+
   }
 
   uploadedFiles: any[] = [];
@@ -18,12 +25,22 @@ export class CargaConceptosGastosComponent implements OnInit {
     console.log(event);
   }
 
-  private onBeforeSend(event) {
-    
-    var xhr:XMLHttpRequest = event.xhr;
-    //event.xhr.setRequestHeader("Host", "http://google.com");
-    var headers = event.xhr.getAllResponseHeaders().toLowerCase();
-    alert(headers);
+  onBeforeSend(event) {
+    //event.xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("AccessToken"));
+    //let url = environment.origin + "api/carga_masiva/upload?token="+this.auth.getAccesToken();
+    //event.xhr.open('POST', url, true);
+  }
+
+  uploadHandler(event) {
+    console.log(event.files);
+    this.cargaMasivaService.subirArchivo(event.files[0], null).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
   onUpload(event) {

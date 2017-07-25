@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
-import { HttpResponseHandlers } from '../helpers/http';
+import { HttpResponseHandlers } from 'app/helpers/http';
 
 @Injectable()
 export class AuthService {
@@ -38,6 +38,14 @@ export class AuthService {
     this.token = null;
     localStorage.removeItem('cpc_user');
     localStorage.removeItem('cpc_token');
+  }
+
+  getAccesToken(){
+    return localStorage.getItem('cpc_token');
+  }
+
+  getUserName(){
+    return localStorage.getItem('cpc_user');
   }
 
 }
